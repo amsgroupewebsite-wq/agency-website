@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "subtitle": "Branding y Publicidad"
+  },
+  "insights": {
+    "client_label": "Cliente:",
+    "client_value": "Capilos",
+    "requests_label": "Solicitudes:",
+    "requests_value": "Creación de materiales publicitarios y soportes físicos",
+    "category_label": "Categoría:",
+    "category_value": "Publicidad, Branding",
+    "socials_label": "Redes Sociales:"
+  },
+  "about": {
+    "description": "CAPILOS es una empresa innovadora que produce y distribuye productos cosméticos capilares.",
+    "website": "www.capilos.net"
+  },
+  "graphic": {
+    "title": "Diseño de PLV",
+    "subtitle": "Branding y Publicidad"
+  }
+}

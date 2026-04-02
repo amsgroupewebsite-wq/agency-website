@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "tagline": "Your strategic communication partner.",
+    "intro": "AMS Agency is a strategic partner dedicated to transforming your projects into memorable experiences.",
+    "description": "AMS Agency is your strategic partner for creative communication solutions, combining innovation and excellence to enhance your brand and make a lasting impact.",
+    "descriptionM": "Branding, content, digital, strategy... our team integrates all levers to build communication that is coherent, innovative, and results-driven.",
+    "descriptionM2": "Entrust us with your brand image and give real momentum to your growth."
+  },
+
+  "services": {
+    "title": "Our services",
+    "subtitle": "Discover the various services our agency offers to help you create or improve your digital communication.",
+    "items": {
+      "consulting": {
+        "title": "CONSULTING",
+        "description": "Our Agency team listens carefully to develop the most effective strategy to achieve your goals."
+      },
+      "graphic": {
+        "title": "GRAPHIC DESIGN",
+        "description": "Demanding and effective creative solutions to bring your brand personality to life."
+      },
+      "web": {
+        "title": "WEB DEVELOPMENT",
+        "description": "Our development service combines functionality, efficiency, and custom design."
+      },
+      "marketing": {
+        "title": "DIGITAL MARKETING",
+        "description": "Increase your visibility, traffic, and maintain constant contact with your audience while controlling your budget."
+      }
+    }
+  },
+
+  "clients": {
+    "title": "Our clients",
+    "explore": "Explore"
+  },
+
+  "impact": {
+    "title": "Agency Impact",
+    "description": "AMS Agency brings your ideas to life with impactful and tailored audiovisual content, combining storytelling, 2D/3D animation, and refined post-production."
+  },
+
+  "values": {
+    "tech": "Tech solution",
+    "advice": "Consulting",
+    "web": "Web solution",
+    "growth": "Business growth",
+    "product": "Product design"
+  },
+
+  "project": {
+    "title": "Do you have a new PROJECT?",
+    "description": "Feel free to contact us! Our team is available to answer all your questions and requests.",
+    "cta": "Contact us"
+  },
+
+  "img": {
+    "DNA": "/agency/agency-en.svg",
+    "services": "/agency/services-en.svg",
+    "clients": "/agency/clients-en.svg",
+    "impact": "/agency/agency-impact-en.svg",
+    "project": "/agency/projets-en.svg"
+  }
+}

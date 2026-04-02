@@ -1,0 +1,65 @@
+{
+  "hero": {
+    "tagline": "Votre partenaire stratégique en communication.",
+    "intro": "AMS Agency est un partenaire stratégique dédié à transformer vos projets en expériences mémorables",
+    "description": "AMS Agency est votre partenaire stratégique pour des solutions créatives en communication, alliant innovation et excellence pour valoriser votre marque et marquer les esprits.",
+    "descriptionM": "Branding, contenu, digital, stratégie... notre équipe intègre tous les leviers pour construire une communication à la fois cohérente, innovante et orientée résultats.",
+    "descriptionM2": "Confiez-nous votre image de marque, et donnez un vrai élan à votre croissance."
+  },
+
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Découvrez les différents services que notre agence propose afin de vous aider à créer ou améliorer votre communication digitale.",
+    "items": {
+      "consulting": {
+        "title": "CONSEIL",
+        "description": "Notre équipe Agency est à votre écoute afin de développer la stratégie la plus efficace pour atteindre vos objectifs."
+      },
+      "graphic": {
+        "title": "CRÉATIONS GRAPHIQUES",
+        "description": "Des solutions créatives exigeantes et efficaces pour faire naître la personnalité de votre marque."
+      },
+      "web": {
+        "title": "DÉVELOPPEMENT WEB",
+        "description": "Notre service développement allie fonctionnalité, efficacité et design sur mesure."
+      },
+      "marketing": {
+        "title": "MARKETING DIGITAL",
+        "description": "Augmentez votre visibilité, votre trafic et gardez un contact permanent avec votre cible tout en maîtrisant votre budget."
+      }
+    }
+  },
+
+  "clients": {
+    "title": "Nos clients",
+    "explore": "Explorer"
+  },
+
+  "impact": {
+    "title": "Agency Impact",
+    "description": "AMS Agency donne vie à vos idées avec des contenus audiovisuels percutants et sur mesure, alliant narration, animation 2D/3D et post-production soignée."
+  },
+
+  "values": {
+    "tech": "Solution tech",
+    "advice": "Conseils",
+    "web": "Solution Web",
+    "growth": "Croissance d'entreprise",
+    "product": "Conception Produit"
+  },
+
+  "project": {
+    "title": "Vous avez un nouveau PROJET ?",
+    "description": "Alors n’hésitez pas à nous contacter ! Notre équipe est à votre écoute, disponible pour répondre à toutes vos questions et demandes.",
+    "cta": "Contactez nous"
+  },
+    "img": {
+    "DNA": "/agency/adn-agency.svg",
+    "services": "/agency/services-fr.svg",
+    "clients": "/agency/clients-fr.svg",
+    "impact": "/agency/agency-impact-fr.svg",
+    "project": "/agency/projets-fr.svg"
+
+   
+  }
+}

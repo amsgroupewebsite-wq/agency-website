@@ -1,0 +1,29 @@
+{
+  "title": "Contact us",
+  "subject": "Subject",
+  "subjectPlaceholder": "Select a subject",
+  "subjects": {
+    "candidature": "Job application",
+    "collaboration": "Collaboration",
+    "information": "Information request",
+    "other": "Other"
+  },
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "phone": "Phone",
+  "message": "Message",
+  "messagePlaceholder": "Write your message here...",
+  "file": "Upload a file",
+  "agree": "By submitting this form, you agree that your personal data may be stored and used to contact you about relevant professional opportunities, in accordance with applicable data protection laws.",
+  "submit": "Send",
+  "errors": {
+    "required": "Required field",
+    "invalidEmail": "Invalid email address",
+    "mustAccept": "You must accept",
+    "subjectRequired": "Please select a subject",
+    "server": "An error occurred while sending your message. Please try again later.",
+    "tooManyRequests": "Too many requests. Please try again later."
+  },
+  "success": "Thank you! Your message has been sent."
+}

@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "subtitle": "Branding & Advertising"
+  },
+  "insights": {
+    "client_label": "Client:",
+    "client_value": "Cosider",
+    "requests_label": "Requests:",
+    "requests_value": "Creation of printed communication materials",
+    "category_label": "Category:",
+    "category_value": "Advertising, Branding",
+    "socials_label": "Social Media:"
+  },
+  "about": {
+    "description": "Cosider is an Algerian public group specializing in construction and public works. The group builds buildings, major structures, and transportation infrastructures.",
+    "website": "www.cosider-groupe.dz"
+  },
+  "graphic": {
+    "title": "Graphic Design",
+    "subtitle": "Branding & Advertising"
+  }
+}

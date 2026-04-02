@@ -1,0 +1,27 @@
+{
+  "title": "Our Projects",
+  "projects": [
+    { "description": "Turbo machinery maintenance centre - Boufarik" },
+    { "description": "Great Mosque of Algiers - Mohammadia, Algiers" },
+    { "description": "Industrial gas plants - Arzew" },
+    { "description": "Water transfer - Jijel - Setif" },
+    { "description": "HRM 3 Boosting Station - Hassi R'Mel" },
+    { "description": "CPF - Rhourd En Nouss" },
+    { "description": "Seawater desalination plant - Tipaza" },
+    { "description": "Medicine manufacturing - Algiers" },
+    { "description": "Industrial gas plants - Arzew" },
+    { "description": "Head office staffing - Algiers" },
+    { "description": "Power plant - Hassi Messaoud" },
+    { "description": "Automotive industry - Oran / Algiers" },
+    { "description": "EPC - Adrar - Timimoun - Tinerkouk" },
+    { "description": "Ammonia plant - Arzew" },
+    { "description": "Factory staffing - Rouiba" },
+    { "description": "Tobacco manufacturing - Oran / Algiers" },
+    { "description": "Head office staffing - Algiers" },
+    { "description": "Head office staffing - Algiers" },
+    { "description": "Head office staffing - Algiers" },
+    { "description": "MEDGAZ" },
+    { "description": "HBR field - Algiers" },
+    { "description": "Well services - HMD" }
+  ]
+}

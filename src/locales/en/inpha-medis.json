@@ -1,0 +1,53 @@
+{
+  "hero": {
+    "title": "INPHA-Médis",
+    "subtitle": "Social Media & Events"
+  },
+  "project": {
+    "client": "Client:",
+    "client_name": "Inpha-Medis Laboratories",
+    "requests": "Requests:",
+    "requests_value": "Social Media Management, Ad Material Creation",
+    "category": "Category:",
+    "category_value": "Social Media, Events",
+    "socials": "Social Networks:"
+  },
+  "about": {
+    "description": "INPHA-MédiS Laboratories is a Joint Stock Company producing pharmaceutical products. Founded in 2000 and in production since 2005.",
+    "website": "www.inphamedis.dz"
+  },
+  "social_media": {
+    "title": "Social Media",
+    "subtitle": "Branding & Publicity",
+    "posts_title_1": "National Holiday",
+     "posts_title_2": "Posts",
+    "paragraph_1": "For <span class=\"font-bold\">Inpha-Medis Laboratories</span> , we designed a series of visuals for social media, combining pedagogy and aesthetics.",
+    "paragraph_2": "Each post addresses seasonal or awareness health topics (summer, nutrition, environment, diabetes...) with a clean design, fresh colors, and an accessible tone.",
+    "paragraph_3": " Overall, it strengthens the brand's digital presence while delivering useful and engaging messages to its community."
+  },
+  "events": {
+    "title": "Cycle Meeting",
+    "subtitle": "Events"
+  },
+  "footer": {
+    "slogan": "AMS Agency, your strategic communication partner, does more than just create content.",
+    "location": "Boulevard du 11 Décembre 1960, BT 09, El Biar, Algeria"
+  },
+  "production": {
+    "title": "Audio-Visual Production",
+    "subtitle": "Events",
+    "animation": {
+      "title": "Animation",
+      "subtitle": "Video Creation"
+    },
+    "website_launch": {
+      "title": "Website",
+      "subtitle": "Launch"
+    },
+    "video_animation": {
+      "title": "Video",
+      "subtitle": "Animation"
+    }
+  },
+  "objective": "The goal of the event is to highlight the corporate alliance between the pharmaceutical lab and the human performance of its collaborators, all within an annual cycle meeting, emphasizing the importance of emotion and harmony in team cohesion."
+}

@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "subtitle": "Branding & Advertising"
+  },
+  "insights": {
+    "client_label": "Client:",
+    "client_value": "Capilos",
+    "requests_label": "Requests:",
+    "requests_value": "Creation of advertising materials and physical supports",
+    "category_label": "Category:",
+    "category_value": "Advertising, Branding",
+    "socials_label": "Social Media:"
+  },
+  "about": {
+    "description": "CAPILOS is an innovative company producing and distributing hair care cosmetic products.",
+    "website": "www.capilos.net"
+  },
+  "graphic": {
+    "title": "POS & Display Design",
+    "subtitle": "Branding & Advertising"
+  }
+}

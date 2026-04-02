@@ -1,0 +1,14 @@
+{
+  "folio": {
+    "description": "Discover the various services our agency offers to help you create or improve your digital communication.",
+    "filters": {
+      "all": "All",
+      "branding": "Branding",
+      "logo": "Logo",
+      "ads": "Advertising",
+      "social": "Social Media",
+      "web": "Website",
+      "event": "Events"
+    }
+  }
+}
