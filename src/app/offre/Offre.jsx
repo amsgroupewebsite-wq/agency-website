@@ -28,23 +28,7 @@ export default function Home() {
     },
   ];
 
-  const section2Ref = useRef(null);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          document.body.classList.add("dark-section");
-        } else {
-          document.body.classList.remove("dark-section");
-        }
-      },
-      { threshold: 0, rootMargin: "-40% 0px -40% 0px" }
-    );
-
-    if (section2Ref.current) observer.observe(section2Ref.current);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <>
@@ -85,7 +69,6 @@ export default function Home() {
 
         {/* Section 2 */}
         <section
-          ref={section2Ref}
           className="
             relative z-10 bg-[#252525]
             px-4 sm:px-6

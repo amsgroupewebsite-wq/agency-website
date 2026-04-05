@@ -21,66 +21,51 @@ const PillNav = ({
 }) => {
   const resolvedPillTextColor = pillTextColor ?? baseColor;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const circleRefs = useRef([]);
-  const tlRefs = useRef([]);
-  const activeTweenRefs = useRef([]);
+  const [hoveredIndex, setHoveredIndex] = useState(null);
+
   const logoImgRef = useRef(null);
   const logoTweenRef = useRef(null);
   const hamburgerRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const navItemsRef = useRef(null);
   const logoRef = useRef(null);
+  const navWrapperRef = useRef(null);
 
+  // ── Hide / show au scroll ──
   useEffect(() => {
-    const layout = () => {
-      circleRefs.current.forEach(circle => {
-        if (!circle?.parentElement) return;
-        const pill = circle.parentElement;
-        const rect = pill.getBoundingClientRect();
-        const { width: w, height: h } = rect;
-        const R = ((w * w) / 4 + h * h) / (2 * h);
-        const D = Math.ceil(2 * R) + 2;
-        const delta = Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
-        const originY = D - delta;
+    let lastScrollY = window.scrollY;
+    let ticking = false;
 
-        circle.style.width = `${D}px`;
-        circle.style.height = `${D}px`;
-        circle.style.bottom = `-${delta}px`;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const wrapper = navWrapperRef.current;
+          if (!wrapper) return;
 
-        gsap.set(circle, {
-          xPercent: -50,
-          scale: 0,
-          transformOrigin: `50% ${originY}px`
+          if (currentScrollY > lastScrollY && currentScrollY > 80) {
+            // Scroll vers le bas → cache la nav
+            gsap.to(wrapper, { y: -100, opacity: 0, duration: 0.3, ease: 'power2.out' });
+          } else {
+            // Scroll vers le haut → montre la nav
+            gsap.to(wrapper, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' });
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
         });
-
-        const label = pill.querySelector('.pill-label');
-        const white = pill.querySelector('.pill-label-hover');
-
-        if (label) gsap.set(label, { y: 0 });
-        if (white) gsap.set(white, { y: h + 12, opacity: 0 });
-
-        const index = circleRefs.current.indexOf(circle);
-        if (index === -1) return;
-
-        tlRefs.current[index]?.kill();
-        const tl = gsap.timeline({ paused: true });
-
-        tl.to(circle, { scale: 1.2, xPercent: -50, duration: 0.5, ease: 'power2.out', overwrite: 'auto' }, 0);
-        if (label) tl.to(label, { y: -(h + 8), duration: 0.45, ease: 'power2.out', overwrite: 'auto' }, 0);
-        if (white) {
-          gsap.set(white, { y: Math.ceil(h + 100), opacity: 0 });
-          tl.to(white, { y: 0, opacity: 1, duration: 0.45, ease: 'power2.out', overwrite: 'auto' }, 0.02);
-        }
-        tlRefs.current[index] = tl;
-      });
+        ticking = true;
+      }
     };
 
-    layout();
-    window.addEventListener('resize', layout);
-    if (document.fonts?.ready) document.fonts.ready.then(layout).catch(() => {});
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
+  // ── Animation initiale ──
+  useEffect(() => {
     const menu = mobileMenuRef.current;
-    if (menu) gsap.set(menu, { visibility: 'hidden', opacity: 0, scaleY: 1, y: 0 });
+    if (menu) gsap.set(menu, { visibility: 'hidden', opacity: 0 });
 
     if (initialLoadAnimation) {
       const logoEl = logoRef.current;
@@ -94,31 +79,7 @@ const PillNav = ({
         gsap.to(navItems, { width: 'auto', duration: 0.6, ease });
       }
     }
-
-    return () => window.removeEventListener('resize', layout);
   }, [items, ease, initialLoadAnimation]);
-
-  const handleEnter = i => {
-    const tl = tlRefs.current[i];
-    if (!tl) return;
-    activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
-      duration: 0.45,
-      ease: 'power2.out',
-      overwrite: 'auto'
-    });
-  };
-
-  const handleLeave = i => {
-    const tl = tlRefs.current[i];
-    if (!tl) return;
-    activeTweenRefs.current[i]?.kill();
-    activeTweenRefs.current[i] = tl.tweenTo(0, {
-      duration: 0.35,
-      ease: 'power1.inOut',
-      overwrite: 'auto'
-    });
-  };
 
   const handleLogoEnter = () => {
     const img = logoImgRef.current;
@@ -156,12 +117,11 @@ const PillNav = ({
         gsap.set(menu, { visibility: 'visible' });
         gsap.fromTo(menu,
           { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.3, ease, transformOrigin: 'top center' }
+          { opacity: 1, y: 0, duration: 0.3, ease }
         );
       } else {
         gsap.to(menu, {
           opacity: 0, y: 10, duration: 0.2, ease,
-          transformOrigin: 'top center',
           onComplete: () => gsap.set(menu, { visibility: 'hidden' })
         });
       }
@@ -186,26 +146,30 @@ const PillNav = ({
     border: '1px solid rgba(255,255,255,0.2)'
   };
 
-  const basePillClasses = 'relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-semibold text-[16px] leading-[0] uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-0';
-
   return (
-    <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000]">
+    <div
+      ref={navWrapperRef}
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-[1000]"
+      style={{ willChange: 'transform, opacity' }}
+    >
       <nav
         className={`flex items-center gap-2 ${className}`}
         aria-label="Primary"
         style={cssVars}
       >
+        {/* Logo */}
         <Link
           href={logoHref}
           aria-label="Home"
           onMouseEnter={handleLogoEnter}
           ref={logoRef}
-          className="rounded-full inline-flex items-center justify-center overflow-hidden flex-shrink-0"
+          className="rounded-full inline-flex items-center justify-center overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
           style={{ width: '52px', height: '52px', background: 'var(--base)', padding: '6px', ...glassStyle }}
         >
           <img src={logo} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-contain block" />
         </Link>
 
+        {/* Desktop */}
         <div
           ref={navItemsRef}
           className="relative items-center rounded-full hidden md:flex"
@@ -218,42 +182,26 @@ const PillNav = ({
           >
             {items.map((item, i) => {
               const isActive = activeHref === item.href;
-              const pillStyle = {
-                background: 'var(--pill-bg, #fff)',
-                color: 'var(--pill-text, var(--base, #000))',
-                paddingLeft: 'var(--pill-pad-x)',
-                paddingRight: 'var(--pill-pad-x)'
-              };
+              const isHovered = hoveredIndex === i;
 
               return (
                 <li key={item.href} role="none" className="flex h-full">
                   <Link
                     role="menuitem"
                     href={item.href}
-                    className={basePillClasses}
-                    style={pillStyle}
                     aria-label={item.ariaLabel || item.label}
-                    onMouseEnter={() => handleEnter(i)}
-                    onMouseLeave={() => handleLeave(i)}
+                    onMouseEnter={() => setHoveredIndex(i)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className="relative inline-flex items-center justify-center h-full rounded-full px-[22px] text-[16px] tracking-[0.2px] whitespace-nowrap cursor-pointer transition-all duration-200"
+                    style={{
+                      background: isHovered || isActive ? 'var(--base)' : 'var(--pill-bg)',
+                      color: isHovered ? 'var(--hover-text)' : 'var(--pill-text)',
+                      transform: isHovered ? 'scale(1.04)' : 'scale(1)',
+                    }}
                   >
-                    <span
-                      className="hover-circle absolute left-1/2 bottom-0 rounded-full z-[1] block pointer-events-none"
-                      style={{ background: 'var(--base)', willChange: 'transform' }}
-                      aria-hidden="true"
-                      ref={el => { circleRefs.current[i] = el; }}
-                    />
-                    <span className="label-stack relative inline-block leading-[1] z-[2]">
-                      <span className="pill-label relative z-[2] inline-block leading-[1]" style={{ willChange: 'transform' }}>
-                        {item.label}
-                      </span>
-                      <span
-                        className="pill-label-hover absolute left-0 top-0 z-[3] inline-block"
-                        style={{ color: 'var(--hover-text, #fff)', willChange: 'transform, opacity' }}
-                        aria-hidden="true"
-                      >
-                        {item.label}
-                      </span>
-                    </span>
+                    {item.label}
+
+                    {/* Point actif */}
                     {isActive && (
                       <span
                         className="absolute left-1/2 -bottom-[6px] -translate-x-1/2 w-3 h-3 rounded-full z-[4]"
@@ -268,45 +216,47 @@ const PillNav = ({
           </ul>
         </div>
 
+        {/* Hamburger mobile */}
         <button
           ref={hamburgerRef}
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
-          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 flex-shrink-0"
+          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 flex-shrink-0 transition-transform duration-200 hover:scale-110"
           style={{ width: '52px', height: '52px', background: 'var(--base)', ...glassStyle }}
         >
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg, #fff)' }} />
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg, #fff)' }} />
+          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg)' }} />
+          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg)' }} />
         </button>
       </nav>
 
+      {/* Menu mobile */}
       <div
         ref={mobileMenuRef}
         className="md:hidden absolute top-[3.5em] left-0 right-0 rounded-[27px] z-[998] origin-top"
         style={{ ...cssVars, background: 'var(--base)', ...glassStyle }}
       >
         <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
-          {items.map(item => {
-            const defaultStyle = { background: 'var(--pill-bg, #fff)', color: 'var(--pill-text, #000)' };
-            const hoverIn = e => { e.currentTarget.style.background = 'var(--base)'; e.currentTarget.style.color = 'var(--hover-text, #fff)'; };
-            const hoverOut = e => { e.currentTarget.style.background = 'var(--pill-bg, #fff)'; e.currentTarget.style.color = 'var(--pill-text, #000)'; };
-
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200"
-                  style={defaultStyle}
-                  onMouseEnter={hoverIn}
-                  onMouseLeave={hoverOut}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
+          {items.map(item => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200"
+                style={{ background: 'var(--pill-bg)', color: 'var(--pill-text)' }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = 'var(--base)';
+                  e.currentTarget.style.color = 'var(--hover-text)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'var(--pill-bg)';
+                  e.currentTarget.style.color = 'var(--pill-text)';
+                }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

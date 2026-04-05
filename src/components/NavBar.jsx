@@ -370,7 +370,7 @@ export default function NavBar() {
       className="custom-nav"
       ease="power3.out"
       baseColor={isLightPage ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.15)"}
-      pillColor={isLightPage ? "rgba(0,0,0,0.85)" : "rgba(255,255,255,0.95)"}
+      pillColor={isLightPage ? "rgba(0,0,0,0)" : "rgba(255,255,255,0.95)"}
       hoveredPillTextColor="#E72048"
       pillTextColor={isLightPage ? "#ffffff" : "#000000"}
       initialLoadAnimation={false}

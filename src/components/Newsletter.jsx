@@ -2,8 +2,8 @@ import { Mail } from "lucide-react";
 
 export default function Newsletter() {
   return (
-    <section className=" text-white  py-16 px-8 flex justify-start flex-col items-center mt-60">
-      <div className="max-w-7xl bg-transparent flex items-center justify-center gap-10 shadow-2xl shadow-inherit rounded-lg p-8 px-40 ">
+    <section className=" text-white  flex justify-start flex-col items-center ">
+      <div className="max-w-7xl bg-[#FFCCB8] flex items-center justify-center gap-10 my-20 mb-20 rounded-lg p-8 px-40 ">
 
         {/* Header */}
         <div className="flex flex-col items-start justify-start gap-6 mb-4 ">
