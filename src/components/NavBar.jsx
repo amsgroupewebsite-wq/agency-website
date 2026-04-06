@@ -356,8 +356,9 @@ export default function NavBar() {
   const navItems = [
     { label: "Offre", href: "/offre", ariaLabel: "Offre" },
     { label: "Projet", href: "/agencyfolio", ariaLabel: "Projet" },
-    { label: "Équipe", href: "/contact", ariaLabel: "Équipe" },
+    { label: "Équipe", href: "/equipe", ariaLabel: "Équipe" },
     { label: "Actu", href:"/blog", ariaLabel: "Actu" },
+    { label: "Contact", href: "/contact", ariaLabel: "Contact" },
   ];
 
   return (

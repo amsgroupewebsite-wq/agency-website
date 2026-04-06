@@ -130,20 +130,24 @@ export default function Home() {
               Contactez-nous
             </Link>
           </motion.div>
+
+
+
+          
         </section>
 
         {/* ── Wrapper overlap (même pattern que Offre) ── */}
         <div className="relative">
 
           {/* Image sticky qui reste en fond pendant que la section monte */}
-          <div className="sticky top-0 z-0 w-full overflow-hidden h-[150vh]">
+          {/* <div className="sticky top-0 z-0 w-full overflow-hidden h-screen">
             <Image
-              src="/expertises/home-deco.png"
+              src="/home-deco.jpeg"
               alt=""
               fill
               className="object-cover w-full h-full"
             />
-          </div>
+          </div> */}
 
           {/* Section sombre qui monte par-dessus */}
           <section
@@ -236,7 +240,9 @@ export default function Home() {
 
                   
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+                
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
                     {clients.map((client, i) => (
                       <div
                         key={i}
@@ -254,7 +260,6 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-              </div>
           </section>
 
         

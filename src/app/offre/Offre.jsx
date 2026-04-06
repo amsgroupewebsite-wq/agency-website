@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
 import Image from "next/image";
 import NavBar from "../../components/NavBar"
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const words = ["impactante", "mémorable", "efficace"];
@@ -28,6 +29,14 @@ export default function Home() {
     },
   ];
 
+  const clients = [
+                      { src: "/agency/clients/cisco.png", alt: "Cisco" },
+                      { src: "/agency/clients/inpha-medis.png", alt: "Inpha Medis" },
+                      { src: "/agency/clients/backerhughes.png", alt: "Baker Hughes" },
+                      { src: "/agency/clients/nestle.png", alt: "Nestlé" },
+                      { src: "/agency/clients/renault.png", alt: "Renault" },
+                      { src: "/agency/clients/sonatrach.png", alt: "Sonatrach" },
+                    ];
 
 
   return (
@@ -45,8 +54,13 @@ export default function Home() {
           )}
         >
           <h1 className="inline text-[#252525]">
-            Boostez votre communication en plus <ContainerTextFlip words={words} /><span className="text-[#E54259]">.</span>
-          </h1>
+              Boostez votre communication en plus{" "}
+              <span className="inline-flex items-center align-middle">
+                <ContainerTextFlip words={words} />
+              </span>
+               <span className="text-[#E54259]">.</span>
+            </h1>
+         
         </motion.div>
         <p className="text-sm sm:text-base mb-10 max-w-6xl">
           Découvrez notre offre de services de communication sur mesure, conçue pour propulser votre marque vers de nouveaux sommets. Que vous soyez une startup ambitieuse ou une entreprise établie, notre équipe d'experts est prête à créer des stratégies innovantes et percutantes qui captivent votre audience et génèrent des résultats tangibles. Avec notre approche personnalisée, nous transformons vos objectifs en campagnes mémorables qui résonnent avec votre public cible. Faites le choix de l'excellence et laissez-nous vous accompagner dans votre succès.
@@ -144,38 +158,60 @@ export default function Home() {
         >
           {/* <span>Naviguer</span> */}
           <svg 
-  className="
-    w-10 h-10 
-    transition-all duration-300
-    group-hover:translate-x-1.5
-    group-hover:scale-110
-    bg-[#E54259]
-    rounded-full
-    text-white
-    p-2
-  " 
-  fill="none" 
-  stroke="currentColor" 
-  strokeWidth={2}
-  viewBox="0 0 24 24"
-  aria-hidden="true"
->
-  <path 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
-    d="M17 8l4 4m0 0l-4 4m4-4H3"
-  />
-</svg>
+             className="
+               w-10 h-10 
+               transition-all duration-300
+               group-hover:translate-x-1.5
+               group-hover:scale-110
+               bg-[#E54259]
+               rounded-full
+               text-white
+               p-2
+             " 
+             fill="none" 
+             stroke="currentColor" 
+             strokeWidth={2}
+             viewBox="0 0 24 24"
+             aria-hidden="true"
+>           
+             <path 
+               strokeLinecap="round" 
+               strokeLinejoin="round" 
+               d="M17 8l4 4m0 0l-4 4m4-4H3"
+             />
+          </svg>
         </a>
       </div>
+
     </div>
   ))}
-</div>
+              </div>
+
+                
 
           </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+                    {clients.map((client, i) => (
+                      <div
+                        key={i}
+                        className="group flex items-center justify-center p-4 rounded-xl transition-all duration-300"
+                      >
+                        <Image
+                          src={client.src}
+                          alt={client.alt}
+                          width={220}
+                          height={100}
+                          className="
+                            w-auto h-22 
+                          "
+                        />
+                      </div>
+                    ))}
+                  </div>
         </section>
 
       </div>
+      <Footer />
     </>
   );
 }

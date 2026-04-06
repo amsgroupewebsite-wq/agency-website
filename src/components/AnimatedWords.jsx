@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
-const words = ["un projet ?", "un CV ?", "une idée ?"];
+const words = [" un projet ?", " un CV ?", " une idée ?"];
 
 export default function AnimatedWords() {
   const [index, setIndex] = useState(0);

@@ -87,7 +87,7 @@ const PillNav = ({
     logoTweenRef.current?.kill();
     gsap.set(img, { rotate: 0 });
     logoTweenRef.current = gsap.to(img, {
-      rotate: 360,
+      rotate: 0,
       duration: 0.4,
       ease,
       overwrite: 'auto'

@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import { useTranslation } from "../hooks/useTranslation";
+
 //import { CreatContact } from "../actions/actions";
 
 export default function ContactForm() {
-  const { t } = useTranslation();
+  
 
   const [form, setForm] = useState({
     firstName: "",
@@ -114,13 +114,13 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="min-h-[60vh] w-full flex items-center justify-center  p-6">
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#FFF8E8] rounded-sm p-6 ">
       <form onSubmit={handleSubmit} className=" max-w-7xl space-y-6 rounded-2xl  pb-0" noValidate>
         <div className="grid grid-cols-1 gap-4">
          
           {/* Prénom */}
           <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">{t("firstName")} *</label>
+            <label htmlFor="firstName" className="block text-sm font-semibold text-gray-700">Prénom*</label>
             <input
               id="firstName"
               name="firstName"
@@ -129,14 +129,14 @@ export default function ContactForm() {
               onChange={handleChange}
               maxLength={25}
               className={`mt-1 w-full rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-black ${errors.firstName ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Jane"
+              placeholder=""
             />
             {errors.firstName && <p className="mt-1 text-xs text-red-600">{errors.firstName}</p>}
           </div>
 
           {/* Nom */}
           <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">{t("lastName")} *</label>
+            <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">Nom*</label>
             <input
               id="lastName"
               name="lastName"
@@ -145,14 +145,14 @@ export default function ContactForm() {
               onChange={handleChange}
               maxLength={25}
               className={`mt-1 w-full rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-black ${errors.lastName ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="Doe"
+              placeholder=""
             />
             {errors.lastName && <p className="mt-1 text-xs text-red-600">{errors.lastName}</p>}
           </div>
 
           {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">{t("email")} *</label>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700">Email*</label>
             <input
               id="email"
               name="email"
@@ -160,14 +160,14 @@ export default function ContactForm() {
               value={form.email}
               onChange={handleChange}
               className={`mt-1 w-full rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-black ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="jane.doe@example.com"
+              placeholder="user@example.com"
             />
             {errors.email && <p className="mt-1 text-xs text-red-600">{errors.email}</p>}
           </div>
 
           {/* Téléphone */}
           <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">{t("phone")} *</label>
+            <label htmlFor="phone" className="block text-sm font-semibold text-gray-700">Téléphone*</label>
             <input
               id="phone"
               name="phone"
@@ -175,7 +175,7 @@ export default function ContactForm() {
               value={form.phone}
               onChange={handleChange}
               className={`mt-1 w-full rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-black ${errors.phone ? 'border-red-500' : 'border-gray-300'}`}
-              placeholder="+1 234 567 890"
+              placeholder="+213 6 12 34 56 78"
             />
             {errors.phone && <p className="mt-1 text-xs text-red-600">{errors.phone}</p>}
           </div>
@@ -183,7 +183,7 @@ export default function ContactForm() {
 
         {/* Message */}
         <div>
-          <label htmlFor="message" className="block text-sm font-medium text-gray-700">{t("message")} *</label>
+          <label htmlFor="message" className="block text-sm font-semibold text-gray-700">Message*</label>
           <textarea
             id="message"
             name="message"
@@ -192,7 +192,7 @@ export default function ContactForm() {
             onChange={handleChange}
             maxLength={600}
             className={`mt-1 w-full rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-black ${errors.message ? 'border-red-500' : 'border-gray-300'}`}
-            placeholder={t("messagePlaceholder")}
+            placeholder="Votre message ici..."
           />
           <div className="mt-1 text-xs text-gray-500 text-right">{form.message.length}/600</div>
           {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
@@ -210,7 +210,8 @@ export default function ContactForm() {
               onChange={handleChange}
               className={`mt-1 h-5 w-5 rounded ${errors.agree ? 'border-red-500' : 'border-gray-300'}`}
             />
-            <label htmlFor="agree" className="text-xs text-gray-700">{t("agree")} *</label>
+            <label htmlFor="agree" className="text-xs text-gray-700">En cochant cette case, vous acceptez que vos données personnelles soient utilisées dans le cadre du traitement de votre demande de contact. Pour en savoir plus sur
+la gestion de vos données et vos droits, consultez notre politique de confidentialité.</label>
           </div>
           {errors.agree && <p className="text-xs text-red-600 w-full max-w-2xl">{errors.agree}</p>}
 
@@ -219,7 +220,7 @@ export default function ContactForm() {
             disabled={isLoading}
             className={`w-full sm:w-fit rounded-2xl flex justify-center items-center gap-3 px-6 py-3 font-medium text-white transition-all ${isLoading ? 'bg-gray-400' : 'bg-[#E54259] hover:bg-[#d13c50]'}`}
           >
-            {isLoading ? "Envoi..." : t("submit")}
+            {isLoading ? "Envoi..." : "Envoyer"}
             {!isLoading && <ArrowRight className="bg-white rounded-md text-[#E54259] w-5 h-5" />}
           </button>
 
