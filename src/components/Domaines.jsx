@@ -3,29 +3,27 @@
 
 import {  useState } from "react";
 
-const members = [
-  { name: "Meriem Beyoucef", post: "Charge de planification", initials: "MB" },
-  { name: "Mourad Akli", post: "Commercial senior", initials: "MA" },
-  { name: "Lylia Zehraoui", post: "Commercial senior", initials: "LZ" },
-  { name: "Mohamed Islam Rahil", post: "Développeur full-stack", initials: "MR" },
-  { name: "Youcef Zellali", post: "Film maker", initials: "YZ" },
-  { name: "Younes", post: "Charge événementielle", initials: "YB" },
-  { name: "Abdelhamid Ouinissi", post: "Charge administrative", initials: "AO" },
-  { name: "Imene Aissa", post: "Responsable contenu", initials: "IA" },
-  { name: "Fares Benammar", post: "Charge digitale", initials: "FB" },
-  { name: "Ahmed Bensoltane Nihad", post: "Charge marketing & communication", initials: "YB" },
-  { name: "Imen El Mokretar", post: "Assistante Administrative", initials: "IE" },
-  { name: "Maria Laieb", post: "Community manager", initials: "ML" },
-  { name: "Oussama Aba", post: "Graphic designer", initials: "OA" },
+const domains = [
+  { name: "Médecine" },
+  { name: "Éducation" },
+  { name: "Média" },
+  { name: "Technologie" },
+  { name: "Finance" },
+  { name: "Marketing" },
+  { name: "Design" },
+  { name: "Commerce" },
+  { name: "Industrie" },
+  { name: "Agriculture" },
+  { name: "Énergie" },
 ];
 
 const rows = [
-  { items: [...members, ...members], direction: "left" },
-  { items: [...[...members].reverse(), ...[...members].reverse()], direction: "right"  },
-  { items: [...members.slice(4), ...members, ...members.slice(0, 4)], direction: "left" },
+  { items: [...domains, ...domains], direction: "left" },
+  { items: [...[...domains].reverse(), ...[...domains].reverse()], direction: "right"  },
+  { items: [...domains.slice(4), ...domains, ...domains.slice(0, 4)], direction: "left" },
 ];
 
-export default function TeamScrollSection() {
+export default function DomainsScrollSection() {
   const [hovered, setHovered] = useState(null);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
@@ -39,7 +37,7 @@ export default function TeamScrollSection() {
   };
 
   return (
-    <section className="py-10 overflow-hidden w-full relative">
+    <section className="py-20 overflow-hidden w-full relative">
       {rows.map((row, i) => (
         <div
           key={i}
@@ -50,12 +48,12 @@ export default function TeamScrollSection() {
           {row.items.map((member, j) => (
             <div
               key={j}
-              className="cursor-pointer px-5 py-2.5 rounded-full text-[15px] font-medium text-[#252525] whitespace-nowrap transition-all"
+              className="cursor-pointer px-5 py-2.5  rounded-full  whitespace-nowrap  transition-all"
               onMouseEnter={(e) => handleMouseEnter(member, e)}
               onMouseMove={updatePos}
               onMouseLeave={() => setHovered(null)}
             >
-                           <p
+             <p
              className="font-extrabold text-[64px] m-0 "
              style={{
                color: 'transparent',
@@ -96,8 +94,8 @@ export default function TeamScrollSection() {
             // </div>
             <div></div>
           )}
-          <p className="font-medium text-[15px] text-[#252525] m-0">{hovered.name}</p>
-          <p className="text-[13px] text-[#888] m-0 mt-0.5">{hovered.post}</p>
+    
+          <p className="text-[13px] text-[#888] m-0 mt-0.5">voir nos projets</p>
         </div>
       )}
     </section>

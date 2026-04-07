@@ -7,7 +7,7 @@ export default function Newsletter() {
     <section className="w-full flex justify-center px-4 sm:px-6 lg:px-8">
       
       <div className="
-        w-full max-w-6xl
+        w-full 
         bg-[#FFCCB8]
         flex flex-col lg:flex-row
         items-start lg:items-center

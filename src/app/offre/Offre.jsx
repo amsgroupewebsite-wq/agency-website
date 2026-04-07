@@ -7,6 +7,7 @@ import { cn } from "../../lib/utils";
 import Image from "next/image";
 import NavBar from "../../components/NavBar"
 import Footer from "../../components/Footer";
+import DomainsScrollSection from "../../components/Domaines";
 
 export default function Home() {
   const words = ["impactante", "mémorable", "efficace"];
@@ -209,6 +210,46 @@ export default function Home() {
                     ))}
                   </div>
         </section>
+
+         {/* Image sticky — desktop uniquement, cachée sur mobile */}
+        <div className="hidden sm:block sticky top-0 z-0 w-full overflow-hidden">
+          <Image
+            src="/deco-offre.png"
+            alt="offer-deco"
+            width={1900}
+            height={600}
+            className="w-full object-cover h-[40vh] sm:h-[50vh] md:h-auto"
+          />
+        </div>
+
+        <section className="
+            relative z-10 bg-[#FFF8E8]
+            px-4 sm:px-6
+            pt-12 sm:pt-24
+            pb-20 sm:pb-40
+            min-h-screen
+            sm:-mt-32
+            rounded-t-2xl sm:rounded-t-3xl
+          ">
+
+          <div className="max-w-6xl mx-auto grid grid-cols-2  sm:grid-cols-1 lg:grid-cols-2 gap-60 items-center justify-between">
+            <div className="flex flex-col gap-4">
+              <span className="text-xs text-[#b0b0b0]">Offre sectorielle</span>
+              <h2 className="font-bold text-4xl  sm:text-4xl md:text-5xl lg:text-6xl tracking-wide leading-tight text-[#252525] mt-1">
+                Nos domaines de prédilection
+              </h2>
+            </div>
+            <p className="text-sm sm:text-base mb-10 max-w-2xl text-[#252525] opacity-90">
+              Centrés citoyens, nous accompagnons des acteurs publics et privés engagés ou en transition sur des enjeux d'intérêt général. Forts de près de 20 ans d'expérience, nous avons développé des expertises solides dans plusieurs secteurs clés.
+            </p>
+          </div>
+
+          <DomainsScrollSection/>
+
+
+          
+        </section>
+
 
       </div>
       <Footer />
