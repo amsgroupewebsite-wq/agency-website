@@ -8,6 +8,8 @@ import Image from "next/image";
 import NavBar from "../../components/NavBar"
 import Footer from "../../components/Footer";
 import DomainsScrollSection from "../../components/Domaines";
+import { Link } from "lucide-react";
+import OffreCard from "../../components/OfferCard";
 
 export default function Home() {
   const words = ["impactante", "mémorable", "efficace"];
@@ -38,6 +40,16 @@ export default function Home() {
                       { src: "/agency/clients/renault.png", alt: "Renault" },
                       { src: "/agency/clients/sonatrach.png", alt: "Sonatrach" },
                     ];
+const formations = [
+  { id: 1, variant: "white",   title: "Formations", description: "Le monde change. Les outils aussi.Pour rester à la hauteur, il fautapprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
+  { id: 2, variant: "outline", title: "Food",        description: "Le monde change. Les outils aussi.Pour rester à la hauteur, il fautapprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
+  { id: 3, variant: "plain",   title: "Régie",       description: "Le monde change. Les outils aussi.Pour rester à la hauteur, il fautapprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
+  { id: 4, variant: "plain",   title: "Formations",  description: "Le monde change. Les outils aussi.Pour rester à la hauteur, il fautapprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
+  { id: 5, variant: "plain",   title: "Formations",  description: "Le monde change. Les outils aussi.Pour rester à la hauteur, il fautapprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
+  { id: 6, variant: "cta" },
+];
+
+
 
 
   return (
@@ -250,6 +262,56 @@ export default function Home() {
           
         </section>
 
+        <section className="bg-white hidden sm:block sticky top-0 z-0 w-full overflow-hidden ">
+          <div className="flex justify-between max-w-6xl mx-auto items-center gap-28 py-10">
+            <div className="flex flex-col gap-7">
+              <span>Notre écosystème</span>
+              <h2 className="text-[#252525] text-5xl font-bold">Une agence augmentée</h2>
+              
+               <a href="#" className="py-2 px-3 w-[160px] bg-[#E54259] text-white rounded-lg hover:bg-[#c1354a] text-center"> En savoir plus</a>
+                   
+          
+            </div>
+            
+            <p>Bien plus qu'une agence, nous sommes
+                un réseau : l'inventivité et la créativité de
+                nos 50 collaborateurs permanents se
+                nourrissent d'un collectif de partenaires
+                à l'expertise pointue, afin de proposer des
+                réponses sur-mesure à toutes vos
+                problématiques de communication,
+              quelles qu'elles soient.</p>
+
+          </div>
+        </section>
+        
+        <section className="bg-[#FFC9D1] relative z-15 py-10 pb-30 rounded-t-lg">
+          <div className="flex justify-between max-w-7xl mx-auto items-center gap-50 py-10">
+            <div className="flex flex-col gap-10 w-[1200px]">
+              <span className="text-[#E54259] ">Verticales</span>
+              <h2 className="text-[#252525] text-5xl font-bold w-full">Nos offres sur-mesure</h2>
+            </div>
+            
+            <p>Parce que certains sujets sont plus
+                complexes que d'autres, nous avons
+                développé des expertises pointues sur
+                certaines thématiques, afin de mieux
+                répondre aux problématiques spécifiques
+                de nos clients. Et toujours dans l'esprit
+                citizen-centric qui nous anime !</p>
+
+          </div>
+
+          <div className="grid grid-cols-3 sm:grid-col-1 justify-center items-center gap-10 mx-60 mt-30">
+            {formations.map((card) => (
+             <OffreCard key={card.id}
+                        variant={card.variant}
+                        title={card.title}
+                        description={card.description}
+               />
+              ))}
+          </div>   
+        </section>
 
       </div>
       <Footer />
