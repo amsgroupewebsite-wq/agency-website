@@ -321,6 +321,8 @@
 //___________________________________________________________________________________________________________________________________
 //___________________________________________________________________________________________________________________________________
 
+//
+
 "use client";
 
 import PillNav from "../components/PillNav";
@@ -355,7 +357,7 @@ export default function NavBar() {
 
   const navItems = [
     { label: "Offre", href: "/offre", ariaLabel: "Offre" },
-    { label: "Projet", href: "/agencyfolio", ariaLabel: "Projet" },
+    { label: "Projet", href: "/projets", ariaLabel: "Projet" },
     { label: "Équipe", href: "/equipe", ariaLabel: "Équipe" },
     { label: "Actu", href:"/blog", ariaLabel: "Actu" },
     { label: "Contact", href: "/contact", ariaLabel: "Contact" },

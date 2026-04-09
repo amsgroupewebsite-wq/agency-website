@@ -170,3 +170,17 @@ body {
 .animate-scroll-left  { animation: scrollLeft  60s linear infinite; }
 .animate-scroll-right { animation: scrollRight 60s linear infinite; }
 
+/* cacher scrollbar (Chrome, Safari, Edge) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* cacher scrollbar (Firefox) */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+/* IE */
+.no-scrollbar {
+  -ms-overflow-style: none;
+}
