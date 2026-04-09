@@ -133,14 +133,14 @@ export default function ProjetsPage() {
 </section>
 
         {/* Projects list */}
-        <section className="relative z-10 w-screen bg-white">
-          <div className="max-w-7xl mx-auto flex flex-col justify-center gap-10 mt-10">
+        <section className="relative z-10 w-screen bg-white ">
+          <div className="max-w-7xl mx-auto flex flex-col justify-center gap-10 mt-10 mx-auto">
             {filteredProjects.length > 0 ? (
               filteredProjects.map((projet, index) => (
                 <Link
                   key={projet.slug} // ← slug unique, plus fiable qu'un index
                   href={`/projets/${projet.slug}`} // ← construit depuis le slug
-                  className="relative border-b border-black/10 pb-6 group"
+                  className="relative border-b border-black/10 pb-6 group mx-0 md:mx-10 sm:mx-16"
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
                 >
