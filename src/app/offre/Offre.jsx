@@ -170,29 +170,7 @@ const formations = [
           "
         >
           {/* <span>Naviguer</span> */}
-          <svg 
-             className="
-               w-10 h-10 
-               transition-all duration-300
-               group-hover:translate-x-1.5
-               group-hover:scale-110
-               bg-[#E54259]
-               rounded-full
-               text-white
-               p-2
-             " 
-             fill="none" 
-             stroke="currentColor" 
-             strokeWidth={2}
-             viewBox="0 0 24 24"
-             aria-hidden="true"
->           
-             <path 
-               strokeLinecap="round" 
-               strokeLinejoin="round" 
-               d="M17 8l4 4m0 0l-4 4m4-4H3"
-             />
-          </svg>
+          <Image src="/flech.png" alt="Voir le projet" width={41} height={45}  className="duration-300 hover:-translate-y-2 hover:scale-110 translate-all"/>
         </a>
       </div>
 
