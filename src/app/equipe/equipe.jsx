@@ -2,8 +2,6 @@
 
 import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
-import NavBar from "../../components/NavBar"
-import Footer from "../../components/Footer";
 import { ContainerTextFlip } from "../../components/ui/container-text-flip";
 import TeamScrollSection from "../../components/TeamScrollSection";
 
@@ -22,7 +20,7 @@ const words = [
 export default function Home() {
     return (
 <>
-       <NavBar /> 
+       
         <section className="pt-20 md:pt-30 px-4 sm:px-6 flex flex-col items-start max-w-6xl mx-auto">
         <span className="text-xs text-[#b0b0b0]">Offre</span>
         <motion.div

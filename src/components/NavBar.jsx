@@ -166,7 +166,7 @@
 //   const { lang, setlang } = useLang();
 //   const { t } = useTranslation("home");
 
-//   const blackPaths = ["/Agencyfolio", "/contact", "/privacy-policy" , "/blog", "/Offre"];
+//   const blackPaths = ["/Agencyfolio", "/contact", "/privacy-policy" , "/actu", "/Offre"];
 //   const whitePaths = ["/", "/cosider", "/inpha-medis", "/capilos", "/ams-groupe"];
 
 //   const isBlackPath = blackPaths.includes(pathname);
@@ -181,7 +181,7 @@
 //     "/inpha-medis": { white: "/nav-logo-ams-agency.png", black: "/nav-logo-ams-agency-black.png" },
 //     "/capilos": { white: "/nav-logo-ams-agency.png", black: "/nav-logo-ams-agency-black.png" },
 //     "/ams-groupe": { white: "/nav-logo-ams-groupe.png", black: "/nav-logo-ams-groupe-black.png" },
-//     "/blog": { black: "/nav-logo-ams-agency-black.png" },
+//     "/actu": { black: "/nav-logo-ams-agency-black.png" },
 //     "/Offre": { black: "/nav-logo-ams-agency-black.png" },
 //   };
 
@@ -194,7 +194,7 @@
 //     "/inpha-medis": { white: "/langue-icon-blanc.png", black: "/langue-icon.png" },
 //     "/capilos": { white: "/langue-icon-blanc.png", black: "/langue-icon.png" },
 //     "/ams-groupe": { white: "/langue-icon-blanc.png", black: "/langue-icon.png" },
-//     "/blog": { black: "/langue-icon.png" },
+//     "/actu": { black: "/langue-icon.png" },
 //     "/Offre": { black: "/langue-icon.png" },
 //   };
 
@@ -207,7 +207,7 @@
 //     "/inpha-medis": { white: "/home-icon-blanc.png", black: "/home-icon.png" },
 //     "/capilos": { white: "/home-icon-blanc.png", black: "/home-icon.png" },
 //     "/ams-groupe": { white: "/home-icon-blanc.png", black: "/home-icon.png" },
-//     "/blog": { black: "/home-icon.png" },
+//     "/actu": { black: "/home-icon.png" },
 //     "/Offre": { black: "/home-icon.png" },
 //   };
 
@@ -220,7 +220,7 @@
 //     "/inpha-medis": { white: "/contact-icon-blanc.png", black: "/contact-icon.png" },
 //     "/capilos": { white: "/contact-icon-blanc.png", black: "/contact-icon.png" },
 //     "/ams-groupe": { white: "/contact-icon-blanc.png", black: "/contact-icon.png" },
-//     "/blog": { black: "/contact-icon.png" },
+//     "/actu": { black: "/contact-icon.png" },
 //     "/Offre": { black: "/contact-icon.png" },
 //   };
 
@@ -332,16 +332,16 @@ export default function NavBar() {
   const pathname = usePathname();
 
   const logoMap = {
-    "/": { white: "/nav-logo-ams-agency.png", black: "/nav-logo-ams-agency-black.png" },
+    "/": { white: "/logoRose.png", black: "/nav-logo-ams-agency-black.png" },
     "/contact": { black: "/nav-logo-ams-agency-black.png" },
     "/agencyfolio": { black: "/nav-logo-ams-agency-black.png" },
     "/privacy-policy": { black: "/nav-logo-ams-agency-black.png" },
-    "/blog": { black: "/nav-logo-ams-agency-black.png" },
+    "/actu": { black: "/nav-logo-ams-agency-black.png" },
     "/offre": { black: "/nav-logo-ams-agency-black.png" },
   };
 
   // Pages avec fond clair → logo noir, pages avec fond foncé/image → logo blanc
-  const darkBgPaths = ["/", "/agencyfolio", "/blog", "/offre", "/contact", "/privacy-policy"];
+  const darkBgPaths = ["/", "/agencyfolio", "/actu", "/offre", "/contact", "/privacy-policy"];
   const isDarkBg = darkBgPaths.includes(pathname);
 
   const logos = logoMap[pathname];
@@ -359,7 +359,7 @@ export default function NavBar() {
     { label: "Offre", href: "/offre", ariaLabel: "Offre" },
     { label: "Projet", href: "/projets", ariaLabel: "Projet" },
     { label: "Équipe", href: "/equipe", ariaLabel: "Équipe" },
-    { label: "Actu", href:"/blog", ariaLabel: "Actu" },
+    { label: "Actu", href:"/actu", ariaLabel: "Actu" },
     { label: "Contact", href: "/contact", ariaLabel: "Contact" },
   ];
 

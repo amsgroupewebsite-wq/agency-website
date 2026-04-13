@@ -6,6 +6,8 @@ import ClientLayout from "../components/ClientLayout";
 import CookieBanner from "../components/CookieBanner";
 import { Inter } from "next/font/google";
 import { cn } from "../lib/utils";
+import NavBar from "../components/NavBar"
+import Footer from "../components/Footer"
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -38,12 +40,14 @@ export default function RootLayout({
         style={{ fontFamily: "'Poppins', sans-serif", letterSpacing: "0.1em" }}
       >
         <CookieBanner />
-
+        <NavBar/>
         <Suspense fallback={null}>
+           
           <ClientProviders>
             <ClientLayout>{children}</ClientLayout>
           </ClientProviders>
         </Suspense>
+        <Footer/>
       </body>
     </html>
   );

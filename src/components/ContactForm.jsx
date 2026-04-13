@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-
-//import { CreatContact } from "../actions/actions";
+import { CreatContact } from "../actions/actions";
 
 export default function ContactForm() {
   
@@ -26,18 +25,18 @@ export default function ContactForm() {
   function validate() {
     const e = {};
     
-    if (!form.firstName.trim()) e.firstName = t("errors.required");
-    if (!form.lastName.trim()) e.lastName = t("errors.required");
-    if (!form.phone.trim()) e.phone = t("errors.required");
-    if (!form.message.trim()) e.message = t("errors.required");
+    if (!form.firstName.trim()) e.firstName = "errors.required";
+    if (!form.lastName.trim()) e.lastName = "errors.required";
+    if (!form.phone.trim()) e.phone = "errors.required";
+    if (!form.message.trim()) e.message = "errors.required";
 
     if (!form.email.trim()) {
-      e.email = t("errors.required");
+      e.email = "errors.required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      e.email = t("errors.invalidEmail");
+      e.email = "errors.invalidEmail";
     }
 
-    if (!form.agree) e.agree = t("errors.mustAccept");
+    if (!form.agree) e.agree = "errors.mustAccept";
 
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -94,7 +93,6 @@ export default function ContactForm() {
         setForm({
           firstName: "",
           lastName: "",
-          lastName: "",
           email: "",
           phone: "",
           message: "",
@@ -104,10 +102,10 @@ export default function ContactForm() {
         setTimeout(() => setSubmitted(false), 5000);
       } else {
         // Erreur retournée par l'action (ex: validation serveur)
-        setErrors({ server: result.error || t("errors.server") });
+        setErrors({ server: result.error || errors.server });
       }
     } catch (err) {
-      setErrors({ server: t("errors.server") });
+      setErrors({ server: "errors.server" });
     } finally {
       setIsLoading(false);
     }
@@ -198,6 +196,19 @@ export default function ContactForm() {
           {errors.message && <p className="mt-1 text-xs text-red-600">{errors.message}</p>}
         </div>
 
+        {/* Pièce jointe */}
+        <div>
+          <label htmlFor="file" className="block text-sm font-medium text-gray-700">file (optionnel)</label>
+          <input
+            id="file"
+            name="file"
+            type="file"
+            onChange={handleChange}
+            accept=".pdf,.png,.jpg,.jpeg,.txt"
+            className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:rounded-xl file:border-0 file:bg-[#E54259] file:px-4 file:py-2 file:text-white hover:file:opacity-90"
+          />
+          <p className="mt-1 text-xs text-gray-500">Max 5MB (PDF, Image, TXT)</p>
+        </div>
         
 
         <div className="flex flex-col items-center gap-5 mt-1 px-4">
@@ -233,7 +244,7 @@ la gestion de vos données et vos droits, consultez notre politique de confident
 
           {submitted && (
             <div className="bg-green-50 border border-green-200 p-3 rounded-lg text-green-800 text-sm">
-              ✓ {t("success")} - Nous vous répondrons bientôt.
+              ✓ success - Nous vous répondrons bientôt.
             </div>
           )}
         </div>

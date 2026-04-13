@@ -17,7 +17,7 @@ export default function Home (){
     
     return(
         <>
-          <NavBar/>
+          
           {/* version 1 */}
 
           {/* <section className="pt-30 px-6">
@@ -75,7 +75,7 @@ export default function Home (){
             
           </section>
              
-                  <Footer />
+              
               
         </>
     )

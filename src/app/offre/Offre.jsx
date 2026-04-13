@@ -54,7 +54,7 @@ const formations = [
 
   return (
     <>
-      <NavBar />
+      
 
       {/* Section 1 — Hero */}
       <section className="pt-20 md:pt-30 px-4 sm:px-6 flex flex-col items-start max-w-6xl mx-auto">

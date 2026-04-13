@@ -22,6 +22,29 @@ export const projets = [
     images: ["/projets/p3.png", "/projets/p5.png"],
     featured: false,
   },
+  {
+    slug: "inpha-medis-prod-audio-visuels2",
+    title: "Inpha Medis Prod Audio Visuels",
+    expertise: "Contenu",
+    secteur: "Pharmaceutique",
+    tags: ["Audio Visuels", "Pharma"],
+    description:
+      "Production audiovisuelle complète pour Inpha Medis, couvrant interviews, reportages internes et films institutionnels.",
+    images: ["/projets/p3.png", "/projets/p5.png"],
+    featured: false,
+  },
+  {
+    slug: "inpha-medis-prod-audio-visuels3",
+    title: "Inpha Medis Prod Audio Visuels",
+    expertise: "Contenu",
+    secteur: "Pharmaceutique",
+    tags: ["Audio Visuels", "Pharma"],
+    description:
+      "Production audiovisuelle complète pour Inpha Medis, couvrant interviews, reportages internes et films institutionnels.",
+    images: ["/projets/p3.png", "/projets/p5.png"],
+    featured: false,
+  },
+  
 ];
 
 export function getProjectBySlug(slug) {

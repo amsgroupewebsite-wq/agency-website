@@ -14,7 +14,7 @@ export default function Home() {
  
     return (
         <>
-        <NavBar />
+       
 
   <div className="w-9/12 mt-20 mb-12 flex flex-col gap-8 items-start justify-self-center justify-start rounded-md bg-[#F2F8FF] p-10">
 
