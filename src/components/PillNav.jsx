@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from "next/link";
+import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 
 const PillNav = ({
@@ -19,16 +20,24 @@ const PillNav = ({
   onMobileMenuClick,
   initialLoadAnimation = true
 }) => {
+  // FIX #4 : si activeHref n'est pas fourni par le parent, on le résout
+  // automatiquement via usePathname (évite que isActive soit toujours false)
+  const pathname = usePathname();
+  const resolvedActiveHref = activeHref ?? pathname;
+
   const resolvedPillTextColor = pillTextColor ?? baseColor;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  // FIX #1 : logoRef pointe sur le wrapper <span> qu'on contrôle,
+  // logoImgRef reste sur le <img> pour la rotation — on n'attache plus
+  // de ref directement sur <Link> (non supporté sans forwardRef en Next.js)
+  const logoWrapperRef = useRef(null);
   const logoImgRef = useRef(null);
   const logoTweenRef = useRef(null);
   const hamburgerRef = useRef(null);
   const mobileMenuRef = useRef(null);
   const navItemsRef = useRef(null);
-  const logoRef = useRef(null);
   const navWrapperRef = useRef(null);
 
   // ── Hide / show au scroll ──
@@ -44,7 +53,6 @@ const PillNav = ({
           if (!wrapper) return;
 
           if (currentScrollY > lastScrollY && currentScrollY > 80) {
-            // Scroll vers le bas → cache la nav + ferme le menu mobile
             gsap.to(wrapper, { y: -100, opacity: 0, duration: 0.3, ease: 'power2.out' });
             if (mobileMenuRef.current) {
               gsap.to(mobileMenuRef.current, {
@@ -54,7 +62,6 @@ const PillNav = ({
               setIsMobileMenuOpen(false);
             }
           } else {
-            // Scroll vers le haut → montre la nav
             gsap.to(wrapper, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' });
           }
 
@@ -75,7 +82,8 @@ const PillNav = ({
     if (menu) gsap.set(menu, { visibility: 'hidden', opacity: 0 });
 
     if (initialLoadAnimation) {
-      const logoEl = logoRef.current;
+      // FIX #1 : on anime logoWrapperRef (le span) au lieu de logoRef (le Link)
+      const logoEl = logoWrapperRef.current;
       const navItems = navItemsRef.current;
       if (logoEl) {
         gsap.set(logoEl, { scale: 0 });
@@ -163,17 +171,26 @@ const PillNav = ({
         aria-label="Primary"
         style={cssVars}
       >
-        {/* Logo */}
-        <Link
-          href={logoHref}
-          aria-label="Home"
-          
-          ref={logoRef}
-          className="rounded-full inline-flex items-center justify-center overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
-          style={{ width: '52px', height: '52px', background: 'var(--base)', padding: '6px', ...glassStyle }}
+        {/* Logo — FIX #1 : ref sur le span wrapper, pas sur Link */}
+        <span
+          ref={logoWrapperRef}
+          className="inline-flex flex-shrink-0"
         >
-          <img src={logo} alt={logoAlt} ref={logoImgRef} className="w-full h-full object-contain block" />
-        </Link>
+          <Link
+            href={logoHref}
+            aria-label="Home"
+            onMouseEnter={handleLogoEnter}
+            className="rounded-full inline-flex items-center justify-center overflow-hidden transition-transform duration-200 hover:scale-110"
+            style={{ width: '52px', height: '52px', background: 'var(--base)', padding: '6px', ...glassStyle }}
+          >
+            <img
+              src={logo}
+              alt={logoAlt}
+              ref={logoImgRef}
+              className="w-full h-full object-contain block"
+            />
+          </Link>
+        </span>
 
         {/* Desktop */}
         <div
@@ -187,7 +204,7 @@ const PillNav = ({
             style={{ gap: 'var(--pill-gap)' }}
           >
             {items.map((item, i) => {
-              const isActive = activeHref === item.href;
+              const isActive = resolvedActiveHref === item.href;
               const isHovered = hoveredIndex === i;
 
               return (
@@ -196,11 +213,14 @@ const PillNav = ({
                     role="menuitem"
                     href={item.href}
                     aria-label={item.ariaLabel || item.label}
+                    aria-current={isActive ? 'page' : undefined}
                     onMouseEnter={() => setHoveredIndex(i)}
                     onMouseLeave={() => setHoveredIndex(null)}
                     className="relative inline-flex items-center justify-center h-full rounded-full px-[22px] text-[16px] tracking-[0.2px] whitespace-nowrap cursor-pointer transition-all duration-200"
                     style={{
-                      background: isHovered || isActive ? 'var(--base)' : 'var(--pill-bg)',
+                      // FIX #2 : isActive → fond sombre (pill-bg), texte clair (pill-text)
+                      // isHovered → fond clair (base), texte sombre (hover-text)
+                      background: isHovered ? 'var(--base)' : isActive ? 'var(--pill-bg)' : 'transparent',
                       color: isHovered ? 'var(--hover-text)' : 'var(--pill-text)',
                       transform: isHovered ? 'scale(1.04)' : 'scale(1)',
                     }}
@@ -237,33 +257,40 @@ const PillNav = ({
         </button>
       </nav>
 
-      {/* Menu mobile */}
+      {/* Menu mobile — FIX #3 : cssVars retiré, variables déjà héritées du nav parent */}
       <div
         ref={mobileMenuRef}
         className="md:hidden absolute top-[3.5em] left-0 right-0 rounded-[27px] z-[998] origin-top"
-        style={{ ...cssVars, background: 'var(--base)', ...glassStyle }}
+        style={{ background: 'var(--base)', ...glassStyle }}
       >
         <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
-          {items.map(item => (
-            <li key={item.href}>
-              <Link
-                href={item.href}
-                className="block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200"
-                style={{ background: 'var(--pill-bg)', color: 'var(--pill-text)' }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = 'var(--base)';
-                  e.currentTarget.style.color = 'var(--hover-text)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'var(--pill-bg)';
-                  e.currentTarget.style.color = 'var(--pill-text)';
-                }}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
+          {items.map(item => {
+            const isActive = resolvedActiveHref === item.href;
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  aria-current={isActive ? 'page' : undefined}
+                  className="block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200"
+                  style={{
+                    background: isActive ? 'var(--base)' : 'var(--pill-bg)',
+                    color: isActive ? 'var(--hover-text)' : 'var(--pill-text)'
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = 'var(--base)';
+                    e.currentTarget.style.color = 'var(--hover-text)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = isActive ? 'var(--base)' : 'var(--pill-bg)';
+                    e.currentTarget.style.color = isActive ? 'var(--hover-text)' : 'var(--pill-text)';
+                  }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
