@@ -1,15 +1,24 @@
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo, useCallback } from 'react';
+
+// Cache pour les conversions de couleur
+const colorCache = new Map();
 
 function hexToVec3(hex) {
+  if (colorCache.has(hex)) return colorCache.get(hex);
+  
   const h = hex.replace('#', '');
-  return [
+  const result = [
     parseInt(h.slice(0, 2), 16) / 255,
     parseInt(h.slice(2, 4), 16) / 255,
     parseInt(h.slice(4, 6), 16) / 255
   ];
+  
+  colorCache.set(hex, result);
+  return result;
 }
 
+// Vertex shader simplifié
 const vertexShader = `
 attribute vec2 uv;
 attribute vec2 position;
@@ -20,6 +29,7 @@ void main() {
 }
 `;
 
+// Fragment shader optimisé
 const fragmentShader = `
 precision highp float;
 
@@ -43,6 +53,7 @@ uniform bool uEnableMouse;
 
 #define TAU 6.28318
 
+// Optimisation : précalculer les gradients
 vec3 gradientHash(vec3 p) {
   p = vec3(
     dot(p, vec3(127.1, 311.7, 234.6)),
@@ -65,13 +76,16 @@ vec3 cosineGradient(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
   return a + b * cos(TAU * (c * t + d));
 }
 
+// Perlin 3D optimisé
 float perlin3D(float amplitude, float frequency, float px, float py, float pz) {
   float x = px * frequency;
   float y = py * frequency;
+  float z = pz;
 
-  float fx = floor(x); float fy = floor(y); float fz = floor(pz);
-  float cx = ceil(x);  float cy = ceil(y);  float cz = ceil(pz);
+  float fx = floor(x); float fy = floor(y); float fz = floor(z);
+  float cx = ceil(x);  float cy = ceil(y);  float cz = ceil(z);
 
+  // Calcul des vecteurs de gradient
   vec3 g000 = gradientHash(vec3(fx, fy, fz));
   vec3 g100 = gradientHash(vec3(cx, fy, fz));
   vec3 g010 = gradientHash(vec3(fx, cy, fz));
@@ -81,19 +95,29 @@ float perlin3D(float amplitude, float frequency, float px, float py, float pz) {
   vec3 g011 = gradientHash(vec3(fx, cy, cz));
   vec3 g111 = gradientHash(vec3(cx, cy, cz));
 
-  float d000 = dot(g000, vec3(x - fx, y - fy, pz - fz));
-  float d100 = dot(g100, vec3(x - cx, y - fy, pz - fz));
-  float d010 = dot(g010, vec3(x - fx, y - cy, pz - fz));
-  float d110 = dot(g110, vec3(x - cx, y - cy, pz - fz));
-  float d001 = dot(g001, vec3(x - fx, y - fy, pz - cz));
-  float d101 = dot(g101, vec3(x - cx, y - fy, pz - cz));
-  float d011 = dot(g011, vec3(x - fx, y - cy, pz - cz));
-  float d111 = dot(g111, vec3(x - cx, y - cy, pz - cz));
-
+  // Interpolation
   float sx = quinticSmooth(x - fx);
   float sy = quinticSmooth(y - fy);
-  float sz = quinticSmooth(pz - fz);
+  float sz = quinticSmooth(z - fz);
 
+  // Optimisation: précalculer les différences
+  float dx = x - fx;
+  float dy = y - fy;
+  float dz = z - fz;
+  float cx_diff = x - cx;
+  float cy_diff = y - cy;
+  float cz_diff = z - cz;
+
+  float d000 = dot(g000, vec3(dx, dy, dz));
+  float d100 = dot(g100, vec3(cx_diff, dy, dz));
+  float d010 = dot(g010, vec3(dx, cy_diff, dz));
+  float d110 = dot(g110, vec3(cx_diff, cy_diff, dz));
+  float d001 = dot(g001, vec3(dx, dy, cz_diff));
+  float d101 = dot(g101, vec3(cx_diff, dy, cz_diff));
+  float d011 = dot(g011, vec3(dx, cy_diff, cz_diff));
+  float d111 = dot(g111, vec3(cx_diff, cy_diff, cz_diff));
+
+  // Interpolation bilinéaire
   float lx00 = mix(d000, d100, sx);
   float lx10 = mix(d010, d110, sx);
   float lx01 = mix(d001, d101, sx);
@@ -114,30 +138,37 @@ float auroraGlow(float t, vec2 shift) {
   float amp = uNoiseAmp;
   vec2 samplePos = uv * uScale;
 
-  for (float i = 0.0; i < 3.0; i += 1.0) {
+  // Réduction des octaves pour améliorer les performances
+  for (float i = 0.0; i < 2.0; i += 1.0) {
     noiseVal += perlin3D(amp, freq, samplePos.x, samplePos.y, t);
     amp *= uOctaveDecay;
     freq *= 2.0;
   }
 
-  float yBand = uv.y * 10.0 - uBandHeight * 10.0;
-  return 0.3 * max(exp(uBandSpread * (1.0 - 1.1 * abs(noiseVal + yBand))), 0.0);
+  float yBand = uv.y * 8.0 - uBandHeight * 8.0;
+  float glow = max(exp(uBandSpread * (1.0 - 1.2 * abs(noiseVal + yBand))), 0.0);
+  return 0.4 * glow;
 }
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uResolution.xy;
-  float t = uSpeed * 0.4 * uTime;
+  float t = uSpeed * 0.3 * uTime;
 
   vec2 shift = vec2(0.0);
   if (uEnableMouse) {
     shift = (uMouse - 0.5) * uMouseInfluence;
   }
 
-  vec3 col = vec3(0.0);
-  col += 0.99 * auroraGlow(t, shift) * cosineGradient(uv.x + uTime * uSpeed * 0.2 * uColorSpeed, vec3(0.5), vec3(0.5), vec3(1.0), vec3(0.3, 0.20, 0.20)) * uColor1;
-  col += 0.99 * auroraGlow(t + uLayerOffset, shift) * cosineGradient(uv.x + uTime * uSpeed * 0.1 * uColorSpeed, vec3(0.5), vec3(0.5), vec3(2.0, 1.0, 0.0), vec3(0.5, 0.20, 0.25)) * uColor2;
+  // Optimisation: calcul unique du temps
+  float timeOffset1 = uv.x + uTime * uSpeed * 0.15 * uColorSpeed;
+  float timeOffset2 = uv.x + uTime * uSpeed * 0.08 * uColorSpeed;
 
+  vec3 col1 = auroraGlow(t, shift) * cosineGradient(timeOffset1, vec3(0.5), vec3(0.5), vec3(1.0), vec3(0.3, 0.20, 0.20)) * uColor1;
+  vec3 col2 = auroraGlow(t + uLayerOffset, shift) * cosineGradient(timeOffset2, vec3(0.5), vec3(0.5), vec3(2.0, 1.0, 0.0), vec3(0.5, 0.20, 0.25)) * uColor2;
+  
+  vec3 col = col1 + col2;
   col *= uBrightness;
+  
   float alpha = clamp(length(col), 0.0, 1.0);
   gl_FragColor = vec4(col, alpha);
 }
@@ -157,44 +188,125 @@ export default function SoftAurora({
   layerOffset = 0,
   colorSpeed = 1.0,
   enableMouseInteraction = true,
-  mouseInfluence = 0.25
+  mouseInfluence = 0.25,
+  lowPerformanceMode = false,
+  quality = 'medium', // 'low', 'medium', 'high'
+  className = '' // Ajout pour permettre des classes personnalisées
 }) {
   const containerRef = useRef(null);
+  const rendererRef = useRef(null);
+  const meshRef = useRef(null);
+  const animationFrameRef = useRef(null);
+
+  // Optimisation des paramètres selon la qualité
+  const qualitySettings = useMemo(() => {
+    switch(quality) {
+      case 'low':
+        return { octaves: 1, glowIntensity: 0.3, bandFactor: 8 };
+      case 'medium':
+        return { octaves: 2, glowIntensity: 0.4, bandFactor: 8 };
+      case 'high':
+        return { octaves: 3, glowIntensity: 0.5, bandFactor: 10 };
+      default:
+        return { octaves: 2, glowIntensity: 0.4, bandFactor: 8 };
+    }
+  }, [quality]);
+
+  // Détection automatique des performances
+  useEffect(() => {
+    if (lowPerformanceMode) return;
+    
+    let timeoutId;
+    const checkPerformance = () => {
+      const startTime = performance.now();
+      let frames = 0;
+      
+      const testInterval = setInterval(() => {
+        frames++;
+        if (frames > 60) {
+          clearInterval(testInterval);
+          const endTime = performance.now();
+          const fps = frames / ((endTime - startTime) / 1000);
+          
+          if (fps < 30 && quality !== 'low') {
+            console.warn('Low performance detected, consider using lowPerformanceMode');
+          }
+        }
+      }, 1000);
+      
+      timeoutId = setTimeout(() => {
+        clearInterval(testInterval);
+      }, 2000);
+    };
+    
+    checkPerformance();
+    
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, [lowPerformanceMode, quality]);
+
+  const resize = useCallback(() => {
+    if (!containerRef.current || !rendererRef.current) return;
+    
+    const width = containerRef.current.clientWidth;
+    const height = containerRef.current.clientHeight;
+    
+    if (width === 0 || height === 0) return;
+    
+    // Limiter la résolution pour les performances
+    const maxDimension = lowPerformanceMode ? 720 : 1920;
+    const scaledWidth = Math.min(width, maxDimension);
+    const scaledHeight = Math.min(height, maxDimension);
+    
+    rendererRef.current.setSize(scaledWidth, scaledHeight);
+    
+    if (meshRef.current?.program?.uniforms?.uResolution) {
+      meshRef.current.program.uniforms.uResolution.value = [
+        rendererRef.current.gl.canvas.width,
+        rendererRef.current.gl.canvas.height,
+        rendererRef.current.gl.canvas.width / rendererRef.current.gl.canvas.height
+      ];
+    }
+  }, [lowPerformanceMode]);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!meshRef.current?.program?.uniforms?.uMouse) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = 1.0 - (e.clientY - rect.top) / rect.height;
+    
+    meshRef.current.program.uniforms.uMouse.value[0] = Math.min(Math.max(x, 0), 1);
+    meshRef.current.program.uniforms.uMouse.value[1] = Math.min(Math.max(y, 0), 1);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    if (!meshRef.current?.program?.uniforms?.uMouse) return;
+    meshRef.current.program.uniforms.uMouse.value[0] = 0.5;
+    meshRef.current.program.uniforms.uMouse.value[1] = 0.5;
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
+    
     const container = containerRef.current;
-    const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
+    const renderer = new Renderer({ 
+      alpha: true, 
+      premultipliedAlpha: false,
+      antialias: quality !== 'low'
+    });
+    
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
-
-    let program;
-    let currentMouse = [0.5, 0.5];
-    let targetMouse = [0.5, 0.5];
-
-    function handleMouseMove(e) {
-      const rect = gl.canvas.getBoundingClientRect();
-      targetMouse = [
-        (e.clientX - rect.left) / rect.width,
-        1.0 - (e.clientY - rect.top) / rect.height
-      ];
-    }
-
-    function handleMouseLeave() {
-      targetMouse = [0.5, 0.5];
-    }
-
-    function resize() {
-      renderer.setSize(container.offsetWidth, container.offsetHeight);
-      if (program) {
-        program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
-      }
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
+    
+    // Optimisation WebGL
+    gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+    
+    rendererRef.current = renderer;
+    
     const geometry = new Triangle(gl);
-    program = new Program(gl, {
+    const program = new Program(gl, {
       vertex: vertexShader,
       fragment: fragmentShader,
       uniforms: {
@@ -214,49 +326,104 @@ export default function SoftAurora({
         uColorSpeed: { value: colorSpeed },
         uMouse: { value: new Float32Array([0.5, 0.5]) },
         uMouseInfluence: { value: mouseInfluence },
-        uEnableMouse: { value: enableMouseInteraction }
+        uEnableMouse: { value: enableMouseInteraction && !lowPerformanceMode }
       }
     });
-
+    
     const mesh = new Mesh(gl, { geometry, program });
+    meshRef.current = mesh;
+    
+    // S'assurer que le canvas est correctement positionné
+    gl.canvas.style.position = 'absolute';
+    gl.canvas.style.top = '0';
+    gl.canvas.style.left = '0';
+    gl.canvas.style.width = '100%';
+    gl.canvas.style.height = '100%';
+    gl.canvas.style.display = 'block';
+    gl.canvas.style.pointerEvents = enableMouseInteraction ? 'auto' : 'none';
+    
     container.appendChild(gl.canvas);
-
-    if (enableMouseInteraction) {
+    
+    // Utiliser ResizeObserver pour une meilleure détection des changements de taille
+    const resizeObserver = new ResizeObserver(() => {
+      resize();
+    });
+    
+    resizeObserver.observe(container);
+    
+    // Premier resize
+    setTimeout(() => resize(), 0);
+    
+    if (enableMouseInteraction && !lowPerformanceMode) {
       gl.canvas.addEventListener('mousemove', handleMouseMove);
       gl.canvas.addEventListener('mouseleave', handleMouseLeave);
     }
-
+    
+    // Animation avec throttling pour les performances
+    let lastTime = 0;
+    const targetFPS = lowPerformanceMode ? 30 : 60;
+    const frameInterval = 1000 / targetFPS;
+    
     let animationFrameId;
-
-    function update(time) {
+    
+    function update(currentTime) {
       animationFrameId = requestAnimationFrame(update);
-      program.uniforms.uTime.value = time * 0.001;
-
-      if (enableMouseInteraction) {
-        currentMouse[0] += 0.05 * (targetMouse[0] - currentMouse[0]);
-        currentMouse[1] += 0.05 * (targetMouse[1] - currentMouse[1]);
-        program.uniforms.uMouse.value[0] = currentMouse[0];
-        program.uniforms.uMouse.value[1] = currentMouse[1];
-      } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
+      
+      const deltaTime = currentTime - lastTime;
+      if (deltaTime < frameInterval) return;
+      
+      lastTime = currentTime;
+      
+      if (meshRef.current?.program?.uniforms?.uTime) {
+        meshRef.current.program.uniforms.uTime.value = currentTime * 0.001;
       }
-
+      
       renderer.render({ scene: mesh });
     }
+    
     animationFrameId = requestAnimationFrame(update);
-
+    animationFrameRef.current = animationFrameId;
+    
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', resize);
-      if (enableMouseInteraction) {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      
+      resizeObserver.disconnect();
+      
+      if (enableMouseInteraction && !lowPerformanceMode && gl.canvas) {
         gl.canvas.removeEventListener('mousemove', handleMouseMove);
         gl.canvas.removeEventListener('mouseleave', handleMouseLeave);
       }
-      container.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      
+      if (container.contains(gl.canvas)) {
+        container.removeChild(gl.canvas);
+      }
+      
+      const loseContext = gl.getExtension('WEBGL_lose_context');
+      if (loseContext) loseContext.loseContext();
+      
+      rendererRef.current = null;
+      meshRef.current = null;
     };
-  }, [speed, scale, brightness, color1, color2, noiseFrequency, noiseAmplitude, bandHeight, bandSpread, octaveDecay, layerOffset, colorSpeed, enableMouseInteraction, mouseInfluence]);
+  }, [speed, scale, brightness, color1, color2, noiseFrequency, noiseAmplitude, 
+      bandHeight, bandSpread, octaveDecay, layerOffset, colorSpeed, 
+      enableMouseInteraction, mouseInfluence, lowPerformanceMode, quality, 
+      resize, handleMouseMove, handleMouseLeave]);
 
-  return <div ref={containerRef} className="w-full h-full" />;
+  return (
+    <div 
+      ref={containerRef} 
+      className={`w-full h-full absolute inset-0 overflow-hidden ${className}`}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        height: '100%'
+      }}
+    />
+  );
 }
