@@ -65,6 +65,7 @@ export default function Home() {
 
   return (
     <>
+    <NavBar/>
       {/* Section 1 — Hero */}
       <section className="pt-20 md:pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Offre</span>

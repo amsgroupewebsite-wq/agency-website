@@ -191,15 +191,7 @@ export default function Home() {
 
 </div>
 
-        <Footer
-                contact={groupContact}
-                email={groupEmail}
-                slogan={"Au Service de votre systeme d'information"}
-                logo="/footer/Artboard 2.png"
-                logoAlt="Logo AMS"
-                maps="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d199.7744929359358!2d3.0248579390855235!3d36.76116519320583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x128fb3d5ed4eab9b%3A0x1de850a86f3b5afe!2sAMS%20Groupe!5e0!3m2!1sen!2sdz!4v1753195888333!5m2!1sen!2sdz"
-                location="Boulevard du 11 Décembre 1960, BT 09,El Biar Algérie"
-              />  
+    
         </>
         
     );

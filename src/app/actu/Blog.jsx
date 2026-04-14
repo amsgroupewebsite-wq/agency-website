@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import Actu from "../../components/Actu";
+import NavBar from "../../components/NavBar";
 
 export default function Home() {
   return (
     <>
+      <NavBar/>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-20 mt-40 max-w-6xl mx-auto px-4 sm:px-6">
 
         {/* Texte intro */}

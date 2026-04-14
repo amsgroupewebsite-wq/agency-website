@@ -8,6 +8,7 @@ import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { projets } from "../../lib/projets";
+import NavBar from "../../components/NavBar";
 
 const words = ["projets", "réalisations", "créations"];
 
@@ -258,7 +259,7 @@ export default function ProjetsPage() {
   return (
     <>
       
-
+      <NavBar/>
       {/* Hero */}
       <section className="pt-20 md:pt-28 lg:pt-32 px-4 sm:px-6 lg:px-8 flex flex-col items-start max-w-6xl mx-auto">
         <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Nos projets</span>

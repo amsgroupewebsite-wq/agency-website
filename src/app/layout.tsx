@@ -40,7 +40,7 @@ export default function RootLayout({
         style={{ fontFamily: "'Poppins', sans-serif", letterSpacing: "0.1em" }}
       >
         <CookieBanner />
-        <NavBar/>
+        
         <Suspense fallback={null}>
            
           <ClientProviders>

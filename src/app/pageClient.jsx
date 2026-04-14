@@ -10,6 +10,7 @@ import ExpertiseDesktop from "../components/ExpertiseDesktop";
 import ExpertiseMobile from "../components/ExpertiseMobil";
 import ClientsGrid from "../components/ClientsGrid";
 import { valeurs } from "../lib/home";
+import NavBar from "../components/NavBar";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -34,6 +35,7 @@ export default function Home() {
 
   return (
     <>
+      <NavBar/>
       {/* Aurora background — desktop only */}
       {/* FIX: position:fixed + explicit 100vw/100vh so OGL canvas has real pixel dimensions */}
       <div
