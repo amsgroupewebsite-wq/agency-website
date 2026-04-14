@@ -167,7 +167,7 @@ const PillNav = ({
         <Link
           href={logoHref}
           aria-label="Home"
-          onMouseEnter={handleLogoEnter}
+          
           ref={logoRef}
           className="rounded-full inline-flex items-center justify-center overflow-hidden flex-shrink-0 transition-transform duration-200 hover:scale-110"
           style={{ width: '52px', height: '52px', background: 'var(--base)', padding: '6px', ...glassStyle }}

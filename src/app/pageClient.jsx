@@ -101,8 +101,8 @@ export default function Home() {
         </section>
 
         {/* Dark section (sticky overlap) */}
-        <div className="relative p-0 m-0 h-[150vh] lg:h-[180vh] xl:h-[220vh] 2xl:h-[120vh]">
-          <section className="sticky z-10 bg-[#252525] rounded-t-3xl px-6 lg:pl-16 xl:pl-24 2xl:pl-32 pt-12 lg:pt-16 xl:pt-20 top-0 lg:-top-10 xl:-top-20 h-[150vh] lg:h-[160vh] xl:h-[200vh] 2xl:h-[100vh]">
+        <div className="relative p-0 m-0 h-[150vh] lg:h-[180vh] xl:h-[200vh] 2xl:h-[120vh]">
+          <section className="sticky z-10 bg-[#252525] rounded-t-3xl px-6 lg:pl-16 xl:pl-24 2xl:pl-32 pt-12 lg:pt-16 xl:pt-20 top-0 lg:-top-10 xl:-top-20 h-[150vh] lg:h-[160vh] xl:h-[190vh] 2xl:h-[100vh]">
             <div className="max-w-7xl mx-auto h-full flex flex-col justify-start">
               <div className="flex flex-col gap-4 lg:gap-6">
                 <span className="text-xs text-white/50 uppercase tracking-widest">
@@ -123,7 +123,7 @@ export default function Home() {
         </div>
 
         {/* Peach section */}
-        <section className="relative z-20 bg-[#FFCCB8] rounded-t-3xl -mt-20 lg:-mt-40 xl:-mt-60 2xl:-mt-40">
+        <section className="relative z-20 bg-[#FFCCB8] rounded-t-3xl -mt-25 lg:-mt-40 xl:-mt-50 2xl:-mt-50">
           <div className="max-w-7xl mx-auto px-6 lg:pl-16 xl:pl-24 2xl:pl-32 lg:pr-12 xl:pr-16">
             <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-16 xl:gap-20 py-12 lg:py-16 xl:py-20">
               
