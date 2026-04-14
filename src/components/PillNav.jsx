@@ -44,8 +44,15 @@ const PillNav = ({
           if (!wrapper) return;
 
           if (currentScrollY > lastScrollY && currentScrollY > 80) {
-            // Scroll vers le bas → cache la nav
+            // Scroll vers le bas → cache la nav + ferme le menu mobile
             gsap.to(wrapper, { y: -100, opacity: 0, duration: 0.3, ease: 'power2.out' });
+            if (mobileMenuRef.current) {
+              gsap.to(mobileMenuRef.current, {
+                opacity: 0, y: 10, duration: 0.2, ease: 'power2.out',
+                onComplete: () => gsap.set(mobileMenuRef.current, { visibility: 'hidden' })
+              });
+              setIsMobileMenuOpen(false);
+            }
           } else {
             // Scroll vers le haut → montre la nav
             gsap.to(wrapper, { y: 0, opacity: 1, duration: 0.3, ease: 'power2.out' });
@@ -85,13 +92,10 @@ const PillNav = ({
     const img = logoImgRef.current;
     if (!img) return;
     logoTweenRef.current?.kill();
-    gsap.set(img, { rotate: 0 });
-    logoTweenRef.current = gsap.to(img, {
-      rotate: 0,
-      duration: 0.4,
-      ease,
-      overwrite: 'auto'
-    });
+    logoTweenRef.current = gsap.fromTo(img,
+      { rotate: 0 },
+      { rotate: 360, duration: 0.6, ease, overwrite: 'auto' }
+    );
   };
 
   const toggleMobileMenu = () => {
@@ -104,11 +108,13 @@ const PillNav = ({
     if (hamburger) {
       const lines = hamburger.querySelectorAll('.hamburger-line');
       if (newState) {
-        gsap.to(lines[0], { rotation: 45, y: 3, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: -45, y: -3, duration: 0.3, ease });
+        gsap.to(lines[0], { rotation: 45, y: 7, duration: 0.3, ease });
+        gsap.to(lines[1], { opacity: 0, scaleX: 0, duration: 0.2, ease });
+        gsap.to(lines[2], { rotation: -45, y: -7, duration: 0.3, ease });
       } else {
         gsap.to(lines[0], { rotation: 0, y: 0, duration: 0.3, ease });
-        gsap.to(lines[1], { rotation: 0, y: 0, duration: 0.3, ease });
+        gsap.to(lines[1], { opacity: 1, scaleX: 1, duration: 0.3, ease });
+        gsap.to(lines[2], { rotation: 0, y: 0, duration: 0.3, ease });
       }
     }
 
@@ -222,12 +228,12 @@ const PillNav = ({
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"
           aria-expanded={isMobileMenuOpen}
-          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 flex-shrink-0 transition-transform duration-200 hover:scale-110"
+          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-[5px] cursor-pointer p-0 flex-shrink-0 transition-transform duration-200 hover:scale-110"
           style={{ width: '52px', height: '52px', background: 'var(--base)', ...glassStyle }}
         >
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
+          <span className="hamburger-line w-5 h-[2px] rounded-full origin-center" style={{ background: '#1a1a1a' }} />
+          <span className="hamburger-line w-5 h-[2px] rounded-full origin-center" style={{ background: '#1a1a1a' }} />
+          <span className="hamburger-line w-5 h-[2px] rounded-full origin-center" style={{ background: '#1a1a1a' }} />
         </button>
       </nav>
 
