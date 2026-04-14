@@ -35,7 +35,12 @@ export default function Home() {
   return (
     <>
       {/* Aurora background — desktop only */}
-      <div className="absolute inset-0 -z-20 w-full h-full pointer-events-none hidden lg:block" aria-hidden="true">
+      {/* FIX: position:fixed + explicit 100vw/100vh so OGL canvas has real pixel dimensions */}
+      <div
+        className="absolute inset-0 -z-20 pointer-events-none bg-[#FFF8E8] hidden lg:block"
+        style={{ width: '100vw', height: '100vh' }}
+        aria-hidden="true"
+      >
         <SoftAurora
           speed={0.6}
           scale={1.5}
@@ -152,68 +157,90 @@ export default function Home() {
         </section>
       </div>
 
-    {/* ══════════════════════ MOBILE ══════════════════════ */}
-      <div className="lg:hidden flex flex-col min-h-screen">
-                <div className="absolute  z-10 w-full h-full overflow-hidden pointer-events-none" aria-hidden="true">
-          <Image
-            src="/mobilblur.png" alt=""
-            width={1815} height={800}
-            className="absolute -top-30 -left-45 w-full select-none"
-            draggable="false"
+      {/* ══════════════════════ MOBILE & TABLET ══════════════════════ */}
+      
+      <div className="lg:hidden flex flex-col min-h-screen bg-[#FFF8E8]">
+        {/* FIX: Aurora fixed+sized outside the flex flow, gradient removed (Aurora covers it) */}
+        <div
+          className="absolute inset-0 z-10 "
+          style={{ width: '100vw', height: '100vh' }}
+          aria-hidden="true"
+        >
+          <SoftAurora
+            speed={0.6}
+            scale={1.5}
+            brightness={1}
+            color1="#FFF8E8"
+            color2="#E5425922"
+            color3="#EE848D"
+            noiseFrequency={2.5}
+            noiseAmplitude={1}
+            bandHeight={0.5}
+            bandSpread={1}
+            octaveDecay={0.1}
+            layerOffset={0}
+            colorSpeed={1}
+            enableMouseInteraction
+            mouseInfluence={0.25}
           />
         </div>
 
-        {/* Hero */}
-        <section className="relative flex flex-col items-center justify-center text-center px-6 pt-16 pb-14 min-h-screen gap-8">
-
+        {/* Hero Section Mobile */}
+        <section className="relative flex flex-col z-10  items-center justify-center text-center px-4 pt-20 pb-16 min-h-[90vh] gap-6">
           <motion.div
-            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
-            className="flex flex-col items-center gap-6 w-full"
+            className="flex flex-col items-center gap-5  w-full"
           >
             <Image
-              src="/agency/agency-logo.svg" alt="Logo AMS Agency"
-              width={320} height={240} loading="eager" priority
-              style={{ height: "auto" }} className="select-none w-[260px] sm:w-[300px]"
+              src="/agency/agency-logo.svg"
+              alt="Logo AMS Agency"
+              width={280}
+              height={200}
+              priority
+              className="select-none w-[200px] sm:w-[260px] md:w-[300px] h-auto -z-10"
             />
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-xs">
+            <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed max-w-xs sm:max-w-sm md:max-w-md">
               AMS Agency est un partenaire stratégique dédié à transformer vos projets en expériences mémorables
             </p>
             <Link
               href="/contact"
-              className="bg-gradient-to-b from-[#E43E56] to-[#1D61AB4D] text-white text-base font-semibold px-8 py-3.5 rounded-full border border-white/60 hover:scale-105 active:scale-95 transition-transform duration-300 mt-2"
+              className="bg-[#E54259] text-white text-sm sm:text-base font-semibold px-6 sm:px-8 py-3 rounded-full border border-white/60 hover:scale-105 active:scale-95 transition-all duration-300 shadow-md"
             >
-              Contactez nous
+              Contactez-nous
             </Link>
           </motion.div>
 
+          {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 0.6 }}
             aria-hidden="true"
           >
-            <span className="text-white/30 text-[10px] tracking-widest uppercase">Scroll</span>
+            <span className="text-white/40 text-[10px] tracking-widest uppercase">Scroll</span>
             <motion.div
-              className="w-px h-8 bg-gradient-to-b from-white/40 to-transparent"
+              className="w-px h-6 bg-gradient-to-b from-white/40 to-transparent"
               animate={{ scaleY: [1, 0.4, 1] }}
               transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
             />
           </motion.div>
         </section>
 
-        {/* Dark section */}
-        <section className="relative z-10 bg-[#252525] -mt-10 rounded-t-2xl px-6 pt-16 pb-20 min-h-screen">
+        {/* Dark section Mobile */}
+        <section className="relative z-10 bg-[#252525] -mt-8 rounded-t-2xl px-4 sm:px-6 pt-12 pb-16 min-h-screen">
           <div className="max-w-xl mx-auto">
             <span className="text-xs text-white/50 uppercase tracking-widest">Offre de services</span>
-            <h2 className="font-bold text-4xl tracking-wide leading-tight text-white mt-3 mb-8">
+            <h2 className="font-bold text-3xl sm:text-4xl tracking-wide leading-tight text-white mt-3 mb-6">
               Nos expertises métiers
             </h2>
             <ExpertiseMobile />
-            <div className="mt-10">
+            <div className="mt-8">
               <Link
                 href="/offre"
-                className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm uppercase tracking-widest transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-white/60 hover:text-white text-xs sm:text-sm uppercase tracking-widest transition-all duration-200"
               >
                 Découvrir notre offre <span aria-hidden="true">→</span>
               </Link>
@@ -221,11 +248,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Peach section */}
-        <section className="relative z-10 bg-[#FFCCB8] -mt-10 rounded-t-2xl px-6 pt-16 pb-20">
+        {/* Peach section Mobile */}
+        <section className="relative z-10 bg-[#FFCCB8] -mt-8 rounded-t-2xl px-4 sm:px-6 pt-12 pb-16">
           <div className="max-w-xl mx-auto">
             <span className="text-xs text-black/50 uppercase tracking-widest">Notre ligne de conduite</span>
-            <h2 className="font-bold text-4xl tracking-wide leading-tight text-[#333] mt-3 mb-10">
+            <h2 className="font-bold text-3xl sm:text-4xl tracking-wide leading-tight text-[#333] mt-3 mb-8">
               Donner aux marques le pouvoir{" "}
               <span className="text-[#E72048]">d'agir.</span>
             </h2>
@@ -235,9 +262,11 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <ClientsGrid className="mt-16 px-6" imageClassName="w-auto h-14" />
+          <ClientsGrid 
+            className="mt-12 px-4 sm:px-6" 
+            imageClassName="w-auto h-10 sm:h-12 md:h-14" 
+          />
         </section>
-
       </div>
     </>
   );

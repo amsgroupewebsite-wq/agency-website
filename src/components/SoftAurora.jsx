@@ -165,7 +165,6 @@ export default function SoftAurora({
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    // Reduce canvas resolution on mobile to save GPU
     const isMobile = window.innerWidth < 1024;
     const dpr = isMobile
       ? Math.min(window.devicePixelRatio, 1)
@@ -175,12 +174,19 @@ export default function SoftAurora({
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
 
+    // FIX: force canvas to fill its container at all times
+    const canvas = gl.canvas;
+    canvas.style.position = 'absolute';
+    canvas.style.inset = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+
     let program;
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
 
     function handleMouseMove(e) {
-      const rect = gl.canvas.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
       targetMouse = [
         (e.clientX - rect.left) / rect.width,
         1.0 - (e.clientY - rect.top) / rect.height
@@ -194,7 +200,11 @@ export default function SoftAurora({
     function resize() {
       renderer.setSize(container.offsetWidth, container.offsetHeight);
       if (program) {
-        program.uniforms.uResolution.value = [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height];
+        program.uniforms.uResolution.value = [
+          gl.canvas.width,
+          gl.canvas.height,
+          gl.canvas.width / gl.canvas.height
+        ];
       }
     }
     window.addEventListener('resize', resize);
@@ -205,37 +215,36 @@ export default function SoftAurora({
       vertex: vertexShader,
       fragment: fragmentShader,
       uniforms: {
-        uTime: { value: 0 },
-        uResolution: { value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height] },
-        uSpeed: { value: speed },
-        uScale: { value: scale },
-        uBrightness: { value: brightness },
-        uColor1: { value: hexToVec3(color1) },
-        uColor2: { value: hexToVec3(color2) },
-        uNoiseFreq: { value: noiseFrequency },
-        uNoiseAmp: { value: noiseAmplitude },
-        uBandHeight: { value: bandHeight },
-        uBandSpread: { value: bandSpread },
-        uOctaveDecay: { value: octaveDecay },
-        uLayerOffset: { value: layerOffset },
-        uColorSpeed: { value: colorSpeed },
-        uMouse: { value: new Float32Array([0.5, 0.5]) },
+        uTime:           { value: 0 },
+        uResolution:     { value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height] },
+        uSpeed:          { value: speed },
+        uScale:          { value: scale },
+        uBrightness:     { value: brightness },
+        uColor1:         { value: hexToVec3(color1) },
+        uColor2:         { value: hexToVec3(color2) },
+        uNoiseFreq:      { value: noiseFrequency },
+        uNoiseAmp:       { value: noiseAmplitude },
+        uBandHeight:     { value: bandHeight },
+        uBandSpread:     { value: bandSpread },
+        uOctaveDecay:    { value: octaveDecay },
+        uLayerOffset:    { value: layerOffset },
+        uColorSpeed:     { value: colorSpeed },
+        uMouse:          { value: new Float32Array([0.5, 0.5]) },
         uMouseInfluence: { value: mouseInfluence },
-        uEnableMouse: { value: enableMouseInteraction }
+        uEnableMouse:    { value: enableMouseInteraction }
       }
     });
 
     const mesh = new Mesh(gl, { geometry, program });
-    container.appendChild(gl.canvas);
+    container.appendChild(canvas);
 
     if (enableMouseInteraction) {
-      gl.canvas.addEventListener('mousemove', handleMouseMove);
-      gl.canvas.addEventListener('mouseleave', handleMouseLeave);
+      canvas.addEventListener('mousemove', handleMouseMove);
+      canvas.addEventListener('mouseleave', handleMouseLeave);
     }
 
     let animationFrameId;
     let lastFrameTime = 0;
-    // Throttle to ~30fps on mobile to reduce GPU load
     const frameInterval = isMobile ? 1000 / 30 : 0;
 
     function update(time) {
@@ -264,13 +273,14 @@ export default function SoftAurora({
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resize);
       if (enableMouseInteraction) {
-        gl.canvas.removeEventListener('mousemove', handleMouseMove);
-        gl.canvas.removeEventListener('mouseleave', handleMouseLeave);
+        canvas.removeEventListener('mousemove', handleMouseMove);
+        canvas.removeEventListener('mouseleave', handleMouseLeave);
       }
-      container.removeChild(gl.canvas);
+      if (container.contains(canvas)) container.removeChild(canvas);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [speed, scale, brightness, color1, color2, noiseFrequency, noiseAmplitude, bandHeight, bandSpread, octaveDecay, layerOffset, colorSpeed, enableMouseInteraction, mouseInfluence]);
 
-  return <div ref={containerRef} className="w-full h-full" />;
+  // FIX: container must be positioned so the absolute canvas fills it correctly
+  return <div ref={containerRef} className="w-full h-full" style={{ position: 'relative' }} />;
 }
