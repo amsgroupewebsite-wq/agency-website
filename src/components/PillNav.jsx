@@ -225,9 +225,9 @@ const PillNav = ({
           className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 flex-shrink-0 transition-transform duration-200 hover:scale-110"
           style={{ width: '52px', height: '52px', background: 'var(--base)', ...glassStyle }}
         >
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg)' }} />
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg)' }} />
-          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: 'var(--pill-bg)' }} />
+          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
+          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
+          <span className="hamburger-line w-4 h-0.5 rounded origin-center" style={{ background: '#252525' }} />
         </button>
       </nav>
 
