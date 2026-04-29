@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import articles from "../lib/articles";
 
-const Categories = ["Tous", "Offre d'emploi", "Analyse", "Interview", "Nouveau projet", "Point de vue", "Tutoriel"];
+const Categories = ["Tous" ,"Marketing","Offre d'emploi", "Analyse", "Interview", "Nouveau projet", "Point de vue", "Tutoriel"];
 
 export default function Actu() {
   const [selectedCategorie, setSelectedCategorie] = useState("Tous");

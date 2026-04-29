@@ -4,19 +4,16 @@
 import {  useState } from "react";
 
 const domains = [
-  { name: "Médecine" },
-  { name: "Éducation" },
-  { name: "Média" },
+  { name: "Pharmaceutique" },
+  { name: "Construction" },
   { name: "Technologie" },
   { name: "Finance" },
   { name: "Marketing" },
   { name: "Design" },
   { name: "Commerce" },
   { name: "Industrie" },
-  { name: "Agriculture" },
-  { name: "Énergie" },
+  { name: "Cosmétique" },
 ];
-
 const rows = [
   { items: [...domains, ...domains], direction: "left" },
   { items: [...[...domains].reverse(), ...[...domains].reverse()], direction: "right"  },

@@ -6,14 +6,34 @@ import ClientLayout from "../components/ClientLayout";
 import CookieBanner from "../components/CookieBanner";
 import { Inter } from "next/font/google";
 import { cn } from "../lib/utils";
-import NavBar from "../components/NavBar"
-import Footer from "../components/Footer"
+
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata = {
-  title: "AMS Groupe",
-  description: "",
+  title: "AMS Agency",
+  description:
+    "AMS Agency est une agence de communication digitale en Algérie spécialisée en création de sites web, branding, marketing digital et solutions sur mesure pour entreprises.",
+  keywords: [
+    "agence digitale Algérie",
+    "création site web Algérie",
+    "marketing digital Algérie",
+    "branding",
+    "AMS Agency",
+    "développement web",
+    "SEO Algérie",
+  ],
+  authors: [{ name: "AMS Agency" }],
+  creator: "AMS Agency",
+  openGraph: {
+    title: "AMS Agency | Agence digitale en Algérie",
+    description:
+      "Développez votre présence en ligne avec AMS Agency : création de sites web, marketing digital et branding.",
+    url: "https://www.amsagency.com",
+    siteName: "AMS Agency",
+    locale: "fr_FR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -47,7 +67,7 @@ export default function RootLayout({
             <ClientLayout>{children}</ClientLayout>
           </ClientProviders>
         </Suspense>
-        <Footer/>
+     
       </body>
     </html>
   );

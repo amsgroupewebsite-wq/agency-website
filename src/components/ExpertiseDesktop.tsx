@@ -1,40 +1,33 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { expertises } from "../lib/home";
 
 export default function ExpertiseDesktop() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
-    <div className="flex-1 flex flex-col">
-      {expertises.map((item, i) => (
+    <div className="flex-1 flex flex-col border-y border-white/10 divide-y divide-white/10 group/list">
+      {expertises.map((item) => (
         <Link
-          key={i}
+          key={item.href}
           href={item.href}
-          className="group relative flex items-center justify-between border-b border-white/10 py-6 cursor-pointer"
-          onMouseEnter={() => setHoveredIndex(i)}
-          onMouseLeave={() => setHoveredIndex(null)}
+          className="group/item relative flex items-center justify-between py-6"
         >
           <span
-            className="font-bold text-4xl lg:text-2xl  xl:text-5xl md:text-md tracking-tight leading-none transition-all duration-300"
-            style={{
-              color:
-                hoveredIndex === null
-                  ? "#ffffff"
-                  : hoveredIndex === i
-                  ? "#E72048"
-                  : "rgba(255,255,255,0.25)",
-              transform: hoveredIndex === i ? "translateX(12px)" : "translateX(0)",
-            }}
+            className="font-bold text-4xl xl:text-5xl tracking-tight leading-none text-white
+                       transition-all duration-300
+                       group-hover/list:text-white/25
+                       group-hover/item:!text-[#E72048]
+                       group-hover/item:translate-x-3"
           >
             {item.label}
           </span>
 
-          {hoveredIndex === i && item.image && (
-            <div className="absolute right-0 top-[110%] -translate-y-1/2 w-96 h-64 rounded-xl overflow-hidden pointer-events-none z-10 animate-fadeScaleIn">
+          {item.image && (
+            <div
+              className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 z-10
+                         w-96 h-64 rounded-xl overflow-hidden
+                         opacity-0 scale-95 transition-all duration-300
+                         group-hover/item:opacity-100 group-hover/item:scale-100"
+            >
               <Image
                 src={item.image}
                 alt={item.label}
@@ -46,7 +39,6 @@ export default function ExpertiseDesktop() {
           )}
         </Link>
       ))}
-      <div className="border-t border-white/10" />
     </div>
   );
 }

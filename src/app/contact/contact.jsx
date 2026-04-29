@@ -1,18 +1,16 @@
 "use client";
 import NavBar from "../../components/NavBar"
 import ContactForm from "../../components/ContactForm"
-//import Image from "next/image"
-//import Footer from "../../components/Footer"
-//import { useTranslation } from "../../hooks/useTranslation";
+import Footer from "../../components/Footer"
 import AnimatedWords from "../../components/AnimatedWords";
 import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
-import Footer from "../../components/Footer";
+
 
 
 export default function Home (){
 
-   // const { t, tArray } = useTranslation("contactPage"); 
+
 
     
     return(
@@ -76,7 +74,7 @@ export default function Home (){
           </section>
              
               
-              
+                 <Footer/>
         </>
     )
 }

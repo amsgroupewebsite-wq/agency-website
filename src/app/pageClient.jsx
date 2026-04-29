@@ -11,6 +11,7 @@ import ExpertiseMobile from "../components/ExpertiseMobil";
 import ClientsGrid from "../components/ClientsGrid";
 import { valeurs } from "../lib/home";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer"
 
 const fadeUp = {
   hidden: { opacity: 0, y: 50 },
@@ -130,7 +131,7 @@ export default function Home() {
         </div>
 
         {/* Peach section */}
-        <section className="relative z-20 bg-[#FFCCB8] rounded-t-3xl -mt-25 lg:-mt-40 xl:-mt-50 2xl:-mt-50">
+        <section className="relative z-20 hidden bg-[#FFCCB8] rounded-t-3xl -mt-25 lg:-mt-40 xl:-mt-50 2xl:-mt-50">
           <div className="max-w-7xl mx-auto px-6 lg:pl-16 xl:pl-24 2xl:pl-32 lg:pr-12 xl:pr-16">
             <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-16 xl:gap-20 py-12 lg:py-16 xl:py-20">
               
@@ -269,7 +270,9 @@ export default function Home() {
             imageClassName="w-auto h-10 sm:h-12 md:h-14" 
           />
         </section>
+        
       </div>
+         <Footer/>
     </>
   );
 }

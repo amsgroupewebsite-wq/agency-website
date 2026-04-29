@@ -1,7 +1,6 @@
 // src/app/projets/page.js
 "use client";
 
-
 import { cn } from "../../lib/utils";
 import { ContainerTextFlip } from "../../components/ui/container-text-flip";
 import { useState, useMemo, useEffect } from "react";
@@ -9,27 +8,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { projets } from "../../lib/projets";
 import NavBar from "../../components/NavBar";
+import Footer from "../../components/Footer";
 
 const words = ["projets", "réalisations", "créations"];
 
-const expertises = [
-  { label: "Sites", count: 17 },
-  { label: "Campagnes", count: 7 },
-  { label: "Contenu", count: 12 },
-  { label: "Identité", count: 6 },
-  { label: "Événement", count: 5 },
-];
-
-const secteurs = [
-  { label: "Éducation", count: 2 },
-  { label: "Énergie", count: 4 },
-  { label: "Institutionnel", count: 28 },
-  { label: "Médias", count: 9 },
-  { label: "Santé", count: 12 },
-  { label: "Sciences", count: 3 },
-  { label: "Tech", count: 6 },
-  { label: "Pharmaceutique", count: 6 },
-];
+// Helper — gère expertise en array OU en string (rétrocompat)
+const getExpertises = (projet) =>
+  Array.isArray(projet.expertise)
+    ? projet.expertise
+    : [projet.expertise].filter(Boolean);
 
 function FilterGroup({ title, items, selected, onSelect }) {
   return (
@@ -81,6 +68,7 @@ function FilterGroup({ title, items, selected, onSelect }) {
 
 function ProjectCard({ projet, isHovered, onHover }) {
   const [imageError, setImageError] = useState(false);
+  const expertisesList = getExpertises(projet);
 
   return (
     <Link
@@ -94,11 +82,22 @@ function ProjectCard({ projet, isHovered, onHover }) {
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#252525] group-hover:text-[#E54259] transition-colors duration-200">
             {projet.title}
           </h2>
-          <span className="text-xs sm:text-sm text-[#252525]/60">
-            {projet.expertise} — {projet.secteur}
-          </span>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-[#252525]/60 mt-1">
+            {expertisesList.map((exp, i) => (
+              <span key={exp} className="inline-flex items-center">
+                {i > 0 && <span className="text-[#252525]/25 mr-2">·</span>}
+                {exp}
+              </span>
+            ))}
+            {projet.secteur && (
+              <>
+                <span className="text-[#252525]/25">—</span>
+                <span className="text-[#E54259]/80">{projet.secteur}</span>
+              </>
+            )}
+          </div>
         </div>
-        
+
         <div className="transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110 self-end sm:self-center">
           <Image
             src="/flech.png"
@@ -107,24 +106,22 @@ function ProjectCard({ projet, isHovered, onHover }) {
             height={38}
             className="sm:w-[41px] sm:h-[45px]"
           />
-            {/* Image preview au hover - desktop uniquement */}
+        </div>
+      </div>
+
+      {/* Image preview au hover — desktop uniquement */}
       {isHovered === projet.slug && projet.images?.[0] && !imageError && (
         <div className="hidden lg:block fixed right-30 top-1/2 -translate-y-1/2 w-80 h-52 rounded-xl overflow-hidden shadow-2xl z-50 pointer-events-none animate-in fade-in zoom-in duration-200">
           <Image
             src={projet.images[0]}
             alt={projet.title}
             fill
+            sizes="320px"
             className="object-cover"
             onError={() => setImageError(true)}
-            unoptimized={process.env.NODE_ENV === 'development'}
           />
         </div>
       )}
-        </div>
-        
-      </div>
-
-    
     </Link>
   );
 }
@@ -133,7 +130,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   const maxVisiblePages = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
   let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-  
+
   if (endPage - startPage + 1 < maxVisiblePages) {
     startPage = Math.max(1, endPage - maxVisiblePages + 1);
   }
@@ -215,17 +212,41 @@ export default function ProjetsPage() {
       setIsMobile(window.innerWidth < 1024);
     };
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Auto-dérivation des filtres depuis les données projets
+  const { expertiseOptions, secteurOptions } = useMemo(() => {
+    const expCounts = new Map();
+    const secCounts = new Map();
+
+    for (const projet of projets) {
+      for (const exp of getExpertises(projet)) {
+        expCounts.set(exp, (expCounts.get(exp) || 0) + 1);
+      }
+      if (projet.secteur) {
+        secCounts.set(projet.secteur, (secCounts.get(projet.secteur) || 0) + 1);
+      }
+    }
+
+    const toSortedOptions = (map) =>
+      [...map.entries()]
+        .map(([label, count]) => ({ label, count }))
+        .sort((a, b) => a.label.localeCompare(b.label, "fr"));
+
+    return {
+      expertiseOptions: toSortedOptions(expCounts),
+      secteurOptions: toSortedOptions(secCounts),
+    };
   }, []);
 
   // Filtrage
   const filteredProjects = useMemo(() => {
     return projets.filter((projet) => {
       const matchExpertise =
-        !selectedExpertise || projet.expertise === selectedExpertise;
-      const matchSecteur =
-        !selectedSecteur || projet.secteur === selectedSecteur;
+        !selectedExpertise || getExpertises(projet).includes(selectedExpertise);
+      const matchSecteur = !selectedSecteur || projet.secteur === selectedSecteur;
       return matchExpertise && matchSecteur;
     });
   }, [selectedExpertise, selectedSecteur]);
@@ -250,29 +271,34 @@ export default function ProjetsPage() {
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Compteur de résultats
+  const resetFilters = () => {
+    setSelectedExpertise(null);
+    setSelectedSecteur(null);
+    setCurrentPage(1);
+  };
+
   const resultCount = filteredProjects.length;
 
   return (
     <>
-      
-      <NavBar/>
+      <NavBar />
+
       {/* Hero */}
-      <section className="pt-20 md:pt-28 lg:pt-32 px-4 sm:px-6 lg:px-8 flex flex-col items-start max-w-6xl mx-auto">
-        <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Nos projets</span>
-        <div className="mb-6 w-full text-left text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight font-bold tracking-tight">
-          <h1 className="text-[#252525]">
-            Ce sont eux qui parlent <br className="hidden sm:block" />
-            le mieux de nous{" "}
-            <span className="inline-flex items-center align-middle">
-              <ContainerTextFlip words={words} />
-            </span>
-            <span className="text-[#E54259]">.</span>
-          </h1>
-        </div>
+      <section className="pt-20 sm:pt-24 md:pt-28 lg:pt-32 pb-8 sm:pb-10 md:pb-12 px-4 sm:px-6 lg:px-8 mx-auto w-full max-w-6xl">
+        <span className="block text-[10px] sm:text-xs text-[#b0b0b0] uppercase tracking-[0.2em] mb-3 sm:mb-4">
+          Nos projets
+        </span>
+
+        <h1 className="text-[#252525] font-bold tracking-tight leading-[1.05] text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          <span className="block">Nos</span>
+          <span className="block my-1 sm:my-2">
+            <ContainerTextFlip words={words} />
+          </span>
+          <span className="block">parlent pour nous.</span>
+        </h1>
       </section>
 
       {/* Filters */}
@@ -280,14 +306,14 @@ export default function ProjetsPage() {
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12">
           <FilterGroup
             title="Expertises"
-            items={expertises}
+            items={expertiseOptions}
             selected={selectedExpertise}
             onSelect={handleExpertiseSelect}
           />
           <div className="w-full h-px lg:h-auto lg:w-px bg-black/10" />
           <FilterGroup
             title="Secteurs"
-            items={secteurs}
+            items={secteurOptions}
             selected={selectedSecteur}
             onSelect={handleSecteurSelect}
           />
@@ -297,19 +323,15 @@ export default function ProjetsPage() {
       {/* Projects list */}
       <section className="relative z-10 bg-white py-8 sm:py-12 lg:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
           {/* Résultats count */}
           <div className="flex justify-between items-center mb-6 sm:mb-8">
             <p className="text-sm text-gray-500">
-              {resultCount} projet{resultCount > 1 ? 's' : ''} trouvé{resultCount > 1 ? 's' : ''}
+              {resultCount} projet{resultCount > 1 ? "s" : ""} trouvé
+              {resultCount > 1 ? "s" : ""}
             </p>
             {(selectedExpertise || selectedSecteur) && (
               <button
-                onClick={() => {
-                  setSelectedExpertise(null);
-                  setSelectedSecteur(null);
-                  setCurrentPage(1);
-                }}
+                onClick={resetFilters}
                 className="text-xs text-[#E54259] hover:underline"
               >
                 Réinitialiser les filtres
@@ -334,11 +356,7 @@ export default function ProjetsPage() {
                   Aucun projet ne correspond aux filtres sélectionnés.
                 </p>
                 <button
-                  onClick={() => {
-                    setSelectedExpertise(null);
-                    setSelectedSecteur(null);
-                    setCurrentPage(1);
-                  }}
+                  onClick={resetFilters}
                   className="mt-4 px-6 py-2 bg-[#E54259] text-white rounded-lg hover:bg-[#c1354a] transition-all"
                 >
                   Voir tous les projets
@@ -358,7 +376,7 @@ export default function ProjetsPage() {
         </div>
       </section>
 
-     
+      <Footer />
     </>
   );
 }

@@ -3,22 +3,24 @@ import { expertises } from "../lib/home";
 
 export default function ExpertiseMobile() {
   return (
-    <div className="flex flex-col">
-      {expertises.map((item, i) => (
+    <div className="flex flex-col border-y border-white/10 divide-y divide-white/10">
+      {expertises.map((item) => (
         <Link
-          key={i}
+          key={item.href}
           href={item.href}
-          className="flex items-center justify-between border-b border-white/10 py-5 cursor-pointer group"
+          className="group flex items-center justify-between py-5"
         >
-          <span className="font-bold text-2xl text-white group-hover:text-[#E72048] group-hover:translate-x-2 transition-all duration-300">
+          <span className="font-bold text-2xl text-white transition-all duration-300 group-hover:text-[#E72048] group-hover:translate-x-2">
             {item.label}
           </span>
-          <span className="text-white/30 group-hover:text-[#E72048] transition-colors duration-300 text-lg" aria-hidden="true">
+          <span
+            className="text-white/30 text-lg transition-colors duration-300 group-hover:text-[#E72048]"
+            aria-hidden="true"
+          >
             →
           </span>
         </Link>
       ))}
-      <div className="border-t border-white/10" />
     </div>
   );
 }

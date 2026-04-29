@@ -100,24 +100,25 @@ export default function ProjetDetail({ projet, isModal = false, onClose }) {
         </div>
         
         {/* Colonne droite - images */}
-        <div className="flex flex-col gap-4 sm:gap-5">
-          {projet.images.map((src, i) => (
-            <div 
-              key={i} 
-              className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden" 
-              style={{ aspectRatio: "16/10" }}
-            >
-              <Image 
-                src={src} 
-                alt={`${projet.title} — ${i + 1}`} 
-                fill 
-                className="object-cover hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 50vw"
-                loading={i === 0 ? "eager" : "lazy"}
-              />
-            </div>
-          ))}
-        </div>
+  <div className="flex flex-col gap-4 sm:gap-5">
+  {projet.images.map((src, i) => (
+    <div 
+      key={i} 
+      className="relative w-full rounded-xl sm:rounded-2xl overflow-hidden bg-neutral-100" 
+      style={{ aspectRatio: "16/10" }}
+    >
+      <Image 
+        src={src} 
+        alt={`${projet.title} — ${i + 1}`} 
+        fill 
+        className="object-cover hover:scale-105 transition-transform duration-500"
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, (max-width: 1536px) 50vw, 900px"
+        loading={i === 0 ? "eager" : "lazy"}
+        quality={100}
+      />
+    </div>
+  ))}
+</div>
       </div>
 
       {/* Projets liés */}

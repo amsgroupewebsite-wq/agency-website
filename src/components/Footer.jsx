@@ -1,7 +1,6 @@
 "use client"
 
 import Image from 'next/image';
-import Link from 'next/link';
 import Newsletter from './Newsletter';
 import { useEffect, useRef, useState } from 'react';
 
@@ -84,21 +83,21 @@ export default function Footer() {
         {/* Colonne 2 : Navigation principale */}
         <div className="flex flex-col gap-4 sm:gap-6 lg:gap-10 text-sm text-[#252525]">
           <a href="/contact" className="font-bold text-sm sm:text-base">Nous contacter</a>
-          <a href="/carriere" className="font-bold text-sm sm:text-base">Vous engager</a>
-          <a href="/charte-ia" className="font-bold text-sm sm:text-base">Charte IA</a>
+          {/* <a href="/carriere" className="font-bold text-sm sm:text-base">Vous engager</a>
+          <a href="/charte-ia" className="font-bold text-sm sm:text-base">Charte IA</a> */}
         </div>
 
         {/* Colonne 3 : Légal */}
         <div className="flex flex-col gap-4 sm:gap-6 lg:gap-10 text-sm">
-          <a href="/mentions-legales" className="font-bold text-sm sm:text-base">Mentions légales</a>
-          <a href="/politique-confidentialite" className="font-bold text-sm sm:text-base">Politique de confidentialité</a>
-          <a href="/cookies" className="font-bold text-sm sm:text-base">Cookies</a>
+          <a href="/privacy-policy" className="font-bold text-sm sm:text-base">Mentions légales</a>
+          <a href="/privacy-policy" className="font-bold text-sm sm:text-base">Politique de confidentialité</a>
+          <a href="/#" className="font-bold text-sm sm:text-base">Cookies</a>
         </div>
 
         {/* Colonne 4 : Plan du site */}
-        <div className="flex flex-col text-sm text-[#252525]">
+        {/* <div className="flex flex-col text-sm text-[#252525]">
           <a href="/plan-du-site" className="hover:underline text-sm sm:text-base">Plan du site</a>
-        </div>
+        </div> */}
 
       </div>
     </footer>

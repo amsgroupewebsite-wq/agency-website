@@ -219,7 +219,7 @@ export default function Home() {
                 </h2>
               </div>
               <p className="text-sm sm:text-base flex-1 text-[#252525]/80 leading-relaxed">
-                Centrés citoyens, nous accompagnons des acteurs publics et privés engagés ou en transition sur des enjeux d'intérêt général. Forts de près de 20 ans d'expérience, nous avons développé des expertises solides dans plusieurs secteurs clés.
+                Profondément ancrés en Algérie, nous accompagnons les institutions et les entreprises dans leurs projets à fort impact, qu’elles soient en phase de croissance, de modernisation ou de transition. Notre agence met à disposition des expertises reconnues dans des secteurs clés pour contribuer à un développement durable et innovant.
               </p>
             </div>
 
@@ -253,7 +253,7 @@ export default function Home() {
         </section>
         
         {/* Section 5 - Offres verticales */}
-        <section className="bg-[#FFC9D1] relative z-10 py-12 sm:py-20 rounded-t-2xl">
+        {/* <section className="bg-[#FFC9D1] relative z-10 py-12 sm:py-20 rounded-t-2xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-20 mb-12 lg:mb-20">
               <div className="flex-1">
@@ -279,8 +279,9 @@ export default function Home() {
               ))}
             </div>
           </div>   
-        </section>
+        </section> */}
       </div>
+         <Footer/>
     </>
   );
 }

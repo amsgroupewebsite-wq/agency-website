@@ -22,12 +22,12 @@ export const valeurs = [
 ];
 
 export const expertises = [
-  { label: "Site Web",           href: "/offre/site-web",    image: "/expertises/site-web.png" },
-  { label: "Campagnes digitales",href: "/offre/campagnes",   image: "/expertises/site-web.png" },
-  { label: "Social media",       href: "/offre/social-media",image: "/expertises/site-web.png" },
-  { label: "Évènementiel",       href: "/offre/evenementiel",image: "/expertises/site-web.png" },
-  { label: "Identité de marque", href: "/offre/identite",    image: "/expertises/site-web.png" },
-  { label: "Stratégie & Conseil",href: "/offre/strategie",   image: "/expertises/site-web.png" },
+  { label: "Développement Web",                   href: "/offre/site-web",     image: "/expertises/site-web.jpg" },
+  { label: "Campagnes digitales",                 href: "/offre/campagnes",    image: "/expertises/digital.jpg" },
+  { label: "Stratégie marketing et communication", href: "/offre/strategie",   image: "/expertises/markiting.jpg" },
+  { label: "Podcast, Film Making et Vidéo",       href: "/offre/production",   image: "/expertises/video.jpg" },
+  { label: "Création graphique",                  href: "/offre/graphisme",    image: "/expertises/graphic.jpg" },
+  { label: "Évènementiel",                        href: "/offre/evenementiel", image: "/expertises/event.jpg" },
 ];
 
 export const clients = [
