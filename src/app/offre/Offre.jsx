@@ -13,6 +13,8 @@ import { clients } from "../../lib/home";
 import ClientsGrid from "../../components/ClientsGrid";
 import { Contact } from "lucide-react";
 import Contactus from "../../components/Contactus";
+
+
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const words = ["impactante", "mémorable", "efficace"];
@@ -31,7 +33,7 @@ export default function Home() {
       <NavBar />
 
       {/* Section 1 — Hero */}
-      <section className="pt-20 md:pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section className="pt-20 md:pt-28 px-4 sm:px-6 lg:px-30 max-w-8xl mx-auto">
         <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Offre</span>
 
         <motion.div
@@ -43,6 +45,7 @@ export default function Home() {
         >
           <h1 className="text-[#252525] leading-tight">
             Boostez votre communication en plus{" "}
+            <br/>
             <span className="inline-flex items-center">
               <ContainerTextFlip words={words} />
             </span>
@@ -77,7 +80,7 @@ export default function Home() {
         </div>
 
         {/* Section 2 - Services */}
-        <section className="relative z-10 bg-[#252525] px-4 sm:px-6 pt-12 sm:pt-24 pb-20 sm:pb-40 min-h-screen md:-mt-32 rounded-t-2xl md:rounded-t-3xl">
+        <section className="relative z-10 bg-[#252525] max-w-8xl px-4 sm:px-6 lg:px-30 pt-12 sm:pt-24 pb-20 sm:pb-40 min-h-screen md:-mt-32 rounded-t-2xl md:rounded-t-3xl">
 
           {/* Image mobile */}
           <div className="block md:hidden w-full mb-10 rounded-xl overflow-hidden">
@@ -91,7 +94,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="flex flex-col lg:flex-row lg:gap-20 max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row lg:gap-20 max-w-8xl mx-auto">
 
             {/* Titre sticky */}
             <div className="lg:sticky lg:top-24 lg:self-start lg:max-w-[320px] mb-10 lg:mb-0">
@@ -161,7 +164,7 @@ export default function Home() {
         </div>
 
         <section className="relative z-10 bg-[#FFF8E8] px-4 sm:px-6 pt-12 sm:pt-24 pb-20 sm:pb-40 min-h-screen md:-mt-32 rounded-t-2xl md:rounded-t-3xl">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-8xl mx-auto px-4 lg:px-30">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-20 mb-12 lg:mb-20">
               <div className="flex-1">
                 <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Offre sectorielle</span>
@@ -179,7 +182,7 @@ export default function Home() {
 
         {/* Section 4 - Écosystème */}
         <section className="bg-white relative z-10 py-12 sm:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-30">
             <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-20">
               <div className="flex-1">
                 <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Notre écosystème</span>

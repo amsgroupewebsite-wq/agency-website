@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function Contactus() {
   return (
-    <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 bg-white">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-8 md:gap-12">
+    <section className="py-12 sm:py-16 lg:py-20 px-20 sm:px-3 lg:px-30 bg-white">
+      <div className="max-w-8xl mx-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-70">
         
         {/* Titre */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">

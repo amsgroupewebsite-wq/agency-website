@@ -18,7 +18,7 @@ export default function Actu() {
   return (
     <>
       {/* Filtres */}
-      <section className="max-w-6xl mx-auto pt-10 px-4">
+      <section className="max-w-6xl mx-auto mt-10 px-4">
         <div className="flex flex-col gap-5">
           <h2 className="text-3xl font-semibold text-[#252525]">Catégories</h2>
           <ul className="flex flex-wrap justify-start items-center gap-3">

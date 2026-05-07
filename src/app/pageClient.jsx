@@ -152,8 +152,8 @@ export default function Home() {
         {/* Peach — z-30, flux normal, glisse par-dessus l'image et défile naturellement */}
         {!SHOW_VALEURS_DESKTOP && (
           <section className="relative z-30 bg-[#fbbaa0] rounded-t-3xl">
-            <div className="max-w-7xl mx-auto px-6 lg:pl-16 xl:pl-24 2xl:pl-32 lg:pr-12 xl:pr-16">
-              <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-16 xl:gap-20 py-12 lg:py-16 xl:py-20">
+            <div className="max-w-8xl mx-auto px-6 lg:pl-16 xl:pl-24 2xl:pl-32 lg:pr-12 xl:pr-16">
+              <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-50 xl:gap-20 py-12 lg:py-16 xl:py-20">
                 <div className="lg:sticky lg:top-24 xl:top-28 lg:self-start lg:max-w-[260px] xl:max-w-xs shrink-0">
                   <span className="text-xs text-black/50 uppercase tracking-widest">
                     Notre ligne de conduite
@@ -272,10 +272,10 @@ export default function Home() {
       </div>
 
         <section
-  className="bg-white px-4 sm:px-6 lg:px-8 py-12 lg:py-16"
-  aria-labelledby="news-heading"
+  className="bg-white  py-12 lg:py-16 max-w-8xl"
+ 
 >
-  <header className="flex flex-col justify-start items-start max-w-6xl mx-auto mb-10">
+  <header className="flex flex-col justify-start items-start max-w-8xl mx-auto px-30 ">
     <p className="text-xs text-[#252525]/80 mb-4">les news</p>
     <h2 id="news-heading" className="text-6xl sm:text-8xl font-semibold sm:font-bold leading-none">
       <span className="block text-[#E43E56]">Ça se passe</span>
@@ -284,8 +284,9 @@ export default function Home() {
   </header>
 
   <Actu />
+  <Contactus />
 </section>
-       <Contactus />
+      
       <Footer />
     </>
   );
