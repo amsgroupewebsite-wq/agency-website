@@ -7,6 +7,7 @@ import Image from "next/image";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import Link from "next/link";
+import Contactus from "../../components/Contactus";
 
 const words = [
   "passion",
@@ -39,6 +40,9 @@ export default function TeamPage() {
           </span>
           <span className="text-[#E54259]">.</span>
         </motion.h1>
+        <p className="text-lg text-[#252525]/80 max-w-3xl  text-left py-4">
+          Découvrez notre équipe passionnée et expérimentée, dédiée à la création de solutions de communication innovantes.
+        </p>
       </section>
 
       <section className="w-full bg-[#FFF8E8] mt-30 py-12 md:py-20">
@@ -202,7 +206,7 @@ export default function TeamPage() {
 
 
         </section>
-
+          <Contactus />
         
       <Footer />
     </>

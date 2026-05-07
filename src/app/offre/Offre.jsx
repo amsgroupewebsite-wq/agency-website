@@ -11,6 +11,8 @@ import DomainsScrollSection from "../../components/Domaines";
 import { expertise as expertises } from "../../lib/expertise";
 import { clients } from "../../lib/home";
 import ClientsGrid from "../../components/ClientsGrid";
+import { Contact } from "lucide-react";
+import Contactus from "../../components/Contactus";
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const words = ["impactante", "mémorable", "efficace"];
@@ -199,7 +201,7 @@ export default function Home() {
           </div>
         </section>
       </div>
-
+      <Contactus />
       <Footer />
     </>
   );

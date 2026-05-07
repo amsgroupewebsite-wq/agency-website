@@ -9,6 +9,7 @@ import Link from "next/link";
 import { projets } from "../../lib/projets";
 import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
+import Contactus from "../../components/Contactus";
 
 const words = ["projets", "réalisations", "créations"];
 
@@ -383,7 +384,7 @@ export default function ProjetsPage() {
           )}
         </div>
       </section>
-
+      <Contactus />
       <Footer />
     </>
   );
