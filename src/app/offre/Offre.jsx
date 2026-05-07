@@ -1,71 +1,33 @@
 "use client"
 
 import { ContainerTextFlip } from "../../components/ui/container-text-flip";
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import NavBar from "../../components/NavBar"
 import Footer from "../../components/Footer";
 import DomainsScrollSection from "../../components/Domaines";
-import OffreCard from "../../components/OfferCard";
-
+import { expertise as expertises } from "../../lib/expertise";
+import { clients } from "../../lib/home";
+import ClientsGrid from "../../components/ClientsGrid";
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const words = ["impactante", "mémorable", "efficace"];
-  
-  const items = [
-    {
-      title: "Sites internet",
-      disc: "Cadrage stratégique / Recherche et tests utilisateurs / Conception UX-UI / Design systems / Ecoconception / Roadmap d'optimisation SEO, analytics et de parcours"
-    },
-    {
-      title: "Campagnes de communication",
-      disc: "Campagnes social media organiques / Campagnes d'influence"
-    },
-    {
-      title: "Contenu digital",
-      disc: "Stratégies éditoriales / Rédaction en chef / Gouvernance et animation éditoriale / Conception rédaction / Création graphique et audiovisuelle / Ecritures expertes (langage claire, SEO, UX-writing, plumes…)"
-    },
-    {
-      title: "Identité et stratégie de marque",
-      disc: "Plateforme de marque / Charte graphique / Logotype / Naming / Signature / Ton de voix "
-    },
-  ];
 
-  const clients = [
-    { src: "/agency/clients/cisco.png", alt: "Cisco" },
-    { src: "/agency/clients/inpha-medis.png", alt: "Inpha Medis" },
-    { src: "/agency/clients/backerhughes.png", alt: "Baker Hughes" },
-    { src: "/agency/clients/nestle.png", alt: "Nestlé" },
-    { src: "/agency/clients/renault.png", alt: "Renault" },
-    { src: "/agency/clients/sonatrach.png", alt: "Sonatrach" },
-  ];
 
-  const formations = [
-    { id: 1, variant: "white", title: "Formations", description: "Le monde change. Les outils aussi. Pour rester à la hauteur, il faut apprendre vite, et bien. Nos formations sont pensées pour ceux qui veulent passer à l'action - tout de suite." },
-    { id: 2, variant: "outline", title: "Food", description: "Expertise culinaire et gastronomique pour les marques de l'agroalimentaire et de la restauration." },
-    { id: 3, variant: "plain", title: "Régie", description: "Gestion et optimisation des espaces publicitaires pour maximiser votre visibilité." },
-    { id: 4, variant: "plain", title: "Événementiel", description: "Création et gestion d'événements sur-mesure pour engager votre audience." },
-    { id: 5, variant: "plain", title: "Brand Content", description: "Stratégies de contenu innovantes pour renforcer votre marque." },
-    { id: 6, variant: "cta" },
-  ];
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Animation scroll pour le texte
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
+
       {/* Section 1 — Hero */}
       <section className="pt-20 md:pt-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <span className="text-xs text-[#b0b0b0] uppercase tracking-wider">Offre</span>
@@ -86,7 +48,7 @@ export default function Home() {
           </h1>
         </motion.div>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -103,30 +65,32 @@ export default function Home() {
         <div className="hidden md:block sticky top-0 z-0 w-full overflow-hidden">
           <Image
             src="/offre-deco.png"
-            alt="offer-deco"
+            alt=""
             width={1900}
             height={800}
             priority
+            sizes="100vw"
             className="w-full object-cover h-[90vh]"
           />
         </div>
 
         {/* Section 2 - Services */}
         <section className="relative z-10 bg-[#252525] px-4 sm:px-6 pt-12 sm:pt-24 pb-20 sm:pb-40 min-h-screen md:-mt-32 rounded-t-2xl md:rounded-t-3xl">
-          
+
           {/* Image mobile */}
           <div className="block md:hidden w-full mb-10 rounded-xl overflow-hidden">
             <Image
               src="/offre-deco.png"
-              alt="offer-deco"
+              alt=""
               width={800}
               height={400}
+              sizes="100vw"
               className="w-full object-cover"
             />
           </div>
 
           <div className="flex flex-col lg:flex-row lg:gap-20 max-w-7xl mx-auto">
-            
+
             {/* Titre sticky */}
             <div className="lg:sticky lg:top-24 lg:self-start lg:max-w-[320px] mb-10 lg:mb-0">
               <span className="text-xs text-white/50 uppercase tracking-wider">Offre de services</span>
@@ -135,39 +99,43 @@ export default function Home() {
               </h2>
             </div>
 
-            {/* Liste des services */}
+            {/* Liste des services — source unique : lib/expertise */}
             <div className="flex-1">
-              {items.map((item, index) => (
+              {expertises.map((item, index) => (
                 <motion.div
-                  key={index}
+                  key={item.slug}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true, margin: "-100px" }}
                   className="mt-10 sm:mt-16 pb-10 sm:pb-16 border-b border-white/10 last:border-none flex flex-col md:flex-row md:items-start md:justify-between gap-6 group"
                 >
-                  <div className="md:max-w-[70%]">
+                  <Link
+                    href={`/offre/${item.slug}`}
+                    className="md:max-w-[70%] block"
+                  >
                     <h3 className="font-bold text-xl sm:text-2xl text-white group-hover:text-[#E54259] transition-colors">
                       {item.title}
                     </h3>
                     <p className="text-sm sm:text-base mt-3 text-white/70 leading-relaxed">
-                      {item.disc}
+                      {item.intro || item.subservices?.join(" / ")}
                     </p>
-                  </div>
+                  </Link>
 
                   <div className="shrink-0">
-                    <a
-                      href="#"
+                    <Link
+                      href={`/offre/${item.slug}`}
+                      aria-label={`En savoir plus sur ${item.title}`}
                       className="inline-flex items-center gap-2 text-[#E54259] font-medium hover:opacity-80 transition-all duration-300 group/link"
                     >
-                      <Image 
-                        src="/flech.png" 
-                        alt="Voir le projet" 
-                        width={41} 
-                        height={45} 
+                      <Image
+                        src="/flech.png"
+                        alt=""
+                        width={41}
+                        height={45}
                         className="duration-300 group-hover/link:-translate-y-1 group-hover/link:scale-110 transition-all"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </motion.div>
               ))}
@@ -175,41 +143,22 @@ export default function Home() {
           </div>
 
           {/* Clients logos */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center mt-16 sm:mt-24">
-            {clients.map((client, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                viewport={{ once: true }}
-                className="flex items-center justify-center p-4 rounded-xl hover:bg-white/5 transition-all duration-300"
-              >
-                <Image
-                  src={client.src}
-                  alt={client.alt}
-                  width={220}
-                  height={100}
-                  className="w-auto h-12 sm:h-16 object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all"
-                />
-              </motion.div>
-            ))}
-          </div>
+          <ClientsGrid className="mt-20" />
         </section>
 
         {/* Section 3 - Domaines */}
         <div className="hidden md:block sticky top-0 z-0 w-full overflow-hidden">
           <Image
             src="/deco-offre.png"
-            alt="offer-deco"
+            alt=""
             width={1900}
             height={600}
+            sizes="100vw"
             className="w-full object-cover h-[50vh] lg:h-[60vh]"
           />
         </div>
 
         <section className="relative z-10 bg-[#FFF8E8] px-4 sm:px-6 pt-12 sm:pt-24 pb-20 sm:pb-40 min-h-screen md:-mt-32 rounded-t-2xl md:rounded-t-3xl">
-          
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 lg:gap-20 mb-12 lg:mb-20">
               <div className="flex-1">
@@ -219,11 +168,9 @@ export default function Home() {
                 </h2>
               </div>
               <p className="text-sm sm:text-base flex-1 text-[#252525]/80 leading-relaxed">
-                Profondément ancrés en Algérie, nous accompagnons les institutions et les entreprises dans leurs projets à fort impact, qu’elles soient en phase de croissance, de modernisation ou de transition. Notre agence met à disposition des expertises reconnues dans des secteurs clés pour contribuer à un développement durable et innovant.
+                Profondément ancrés en Algérie, nous accompagnons les institutions et les entreprises dans leurs projets à fort impact, qu'elles soient en phase de croissance, de modernisation ou de transition. Notre agence met à disposition des expertises reconnues dans des secteurs clés pour contribuer à un développement durable et innovant.
               </p>
             </div>
-
-            
           </div>
           <DomainsScrollSection />
         </section>
@@ -237,51 +184,23 @@ export default function Home() {
                 <h2 className="text-[#252525] text-3xl sm:text-4xl lg:text-5xl font-bold mt-2 mb-6">
                   Une agence augmentée
                 </h2>
-                <a 
-                  href="#" 
+                <Link
+                  href="/contact"
                   className="inline-block px-6 py-3 bg-[#E54259] text-white rounded-lg hover:bg-[#c1354a] transition-all hover:scale-105"
                 >
                   En savoir plus
-                </a>
+                </Link>
               </div>
-              
+
               <p className="flex-1 text-gray-600 leading-relaxed">
-                Bien plus qu'une agence, nous sommes un réseau : l'inventivité et la créativité de nos 50 collaborateurs permanents se nourrissent d'un collectif de partenaires à l'expertise pointue, afin de proposer des réponses sur-mesure à toutes vos problématiques de communication, quelles qu'elles soient.
+                Une agence, oui — mais surtout un réseau. Aux talents de nos équipes permanentes s'ajoute l'expertise pointue de nos partenaires, pour bâtir des réponses sur-mesure à chacun de vos défis de communication.
               </p>
             </div>
           </div>
         </section>
-        
-        {/* Section 5 - Offres verticales */}
-        {/* <section className="bg-[#FFC9D1] relative z-10 py-12 sm:py-20 rounded-t-2xl">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-20 mb-12 lg:mb-20">
-              <div className="flex-1">
-                <span className="text-[#E54259] text-xs uppercase tracking-wider font-semibold">Verticales</span>
-                <h2 className="text-[#252525] text-3xl sm:text-4xl lg:text-5xl font-bold mt-2">
-                  Nos offres sur-mesure
-                </h2>
-              </div>
-              
-              <p className="flex-1 text-[#252525]/80 leading-relaxed">
-                Parce que certains sujets sont plus complexes que d'autres, nous avons développé des expertises pointues sur certaines thématiques, afin de mieux répondre aux problématiques spécifiques de nos clients. Et toujours dans l'esprit citizen-centric qui nous anime !
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-              {formations.map((card) => (
-                <OffreCard 
-                  key={card.id}
-                  variant={card.variant}
-                  title={card.title}
-                  description={card.description}
-                />
-              ))}
-            </div>
-          </div>   
-        </section> */}
       </div>
-         <Footer/>
+
+      <Footer />
     </>
   );
 }

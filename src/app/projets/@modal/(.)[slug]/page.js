@@ -1,3 +1,4 @@
+// src/app/@modal/(.)projet/[slug]/page.jsx
 "use client";
 
 import { useRouter } from "next/navigation";
@@ -8,7 +9,7 @@ import ProjetDetail from "../../../../components/ProjetDetail";
 export default function ProjetModal({ params }) {
   const { slug } = use(params);
   const router = useRouter();
-  const projet = projets.find((p) => p.slug === slug);
+  const item = projets.find((p) => p.slug === slug);
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") router.back(); };
@@ -21,7 +22,7 @@ export default function ProjetModal({ params }) {
     return () => { document.body.style.overflow = ""; };
   }, []);
 
-  if (!projet) return null;
+  if (!item) return null;
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function ProjetModal({ params }) {
 
         {/* Contenu partagé en mode modal */}
         <ProjetDetail
-          projet={projet}
+          projet={item}
           isModal={true}
           onClose={() => router.back()}
         />

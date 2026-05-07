@@ -7,10 +7,10 @@ import CookieBanner from "../components/CookieBanner";
 import { Inter } from "next/font/google";
 import { cn } from "../lib/utils";
 
-
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
+  metadataBase: new URL("https://www.amsagency.com"),
   title: "AMS Agency",
   description:
     "AMS Agency est une agence de communication digitale en Algérie spécialisée en création de sites web, branding, marketing digital et solutions sur mesure pour entreprises.",
@@ -25,6 +25,11 @@ export const metadata = {
   ],
   authors: [{ name: "AMS Agency" }],
   creator: "AMS Agency",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
   openGraph: {
     title: "AMS Agency | Agence digitale en Algérie",
     description:
@@ -33,16 +38,26 @@ export const metadata = {
     siteName: "AMS Agency",
     locale: "fr_FR",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "AMS Agency",
+      },
+    ],
   },
 };
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: ReactNode;
+  modal: ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", inter.variable)}>
+    <html lang="fr" className={cn("font-sans", inter.variable)}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -60,14 +75,14 @@ export default function RootLayout({
         style={{ fontFamily: "'Poppins', sans-serif", letterSpacing: "0.1em" }}
       >
         <CookieBanner />
-        
+
         <Suspense fallback={null}>
-           
           <ClientProviders>
             <ClientLayout>{children}</ClientLayout>
           </ClientProviders>
         </Suspense>
-     
+
+        {modal}
       </body>
     </html>
   );

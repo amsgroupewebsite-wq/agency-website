@@ -69,6 +69,7 @@ function FilterGroup({ title, items, selected, onSelect }) {
 function ProjectCard({ projet, isHovered, onHover }) {
   const [imageError, setImageError] = useState(false);
   const expertisesList = getExpertises(projet);
+  const showPreview = isHovered === projet.slug && projet.images?.[0] && !imageError;
 
   return (
     <Link
@@ -78,7 +79,7 @@ function ProjectCard({ projet, isHovered, onHover }) {
       onMouseLeave={() => onHover(null)}
     >
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h2 className="text-lg sm:text-xl md:text-2xl font-semibold text-[#252525] group-hover:text-[#E54259] transition-colors duration-200">
             {projet.title}
           </h2>
@@ -98,30 +99,37 @@ function ProjectCard({ projet, isHovered, onHover }) {
           </div>
         </div>
 
-        <div className="transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110 self-end sm:self-center">
-          <Image
-            src="/flech.png"
-            alt="Voir le projet"
-            width={35}
-            height={38}
-            className="sm:w-[41px] sm:h-[45px]"
-          />
+        {/* Wrapper qui contient flèche + preview, ancré à droite */}
+        <div className="relative self-end sm:self-center">
+          <div className="transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-110">
+            <Image
+              src="/flech.png"
+              alt="Voir le projet"
+              width={35}
+              height={38}
+              className="sm:w-[41px] sm:h-[45px]"
+            />
+          </div>
+
+          {/* Preview ancré à la flèche, à gauche pour ne pas sortir du viewport */}
+          {showPreview && (
+            <div
+              className="hidden lg:block absolute right-full top-1/2 -translate-y-1/2 mr-6
+                         w-80 h-52 rounded-xl overflow-hidden shadow-2xl z-50 pointer-events-none
+                         animate-in fade-in zoom-in-95 duration-200"
+            >
+              <Image
+                src={projet.images[0]}
+                alt={projet.title}
+                fill
+                sizes="320px"
+                className="object-cover"
+                onError={() => setImageError(true)}
+              />
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Image preview au hover — desktop uniquement */}
-      {isHovered === projet.slug && projet.images?.[0] && !imageError && (
-        <div className="hidden lg:block fixed right-30 top-1/2 -translate-y-1/2 w-80 h-52 rounded-xl overflow-hidden shadow-2xl z-50 pointer-events-none animate-in fade-in zoom-in duration-200">
-          <Image
-            src={projet.images[0]}
-            alt={projet.title}
-            fill
-            sizes="320px"
-            className="object-cover"
-            onError={() => setImageError(true)}
-          />
-        </div>
-      )}
     </Link>
   );
 }

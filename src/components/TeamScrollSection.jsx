@@ -5,18 +5,20 @@ import Image from "next/image";
 
 // `photo` and `linkedin` are both optional
 const members = [
-  { name: "Meriem Beyoucef",        post: "Chargée de planification",         initials: "MB",                             linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341" },
-  { name: "Mourad Akli",            post: "Commercial senior",                initials: "MA", photo: "/team/mourad.jpg",  linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341" },
-  { name: "Lylia Zehraoui",         post: "Commerciale senior",               initials: "LZ", photo: "/team/lylia.jpeg",   linkedin: "https://www.linkedin.com/in/lylia-zahraoui-6690b7184/" },
+  { name: "Meriem Benyoucef",       post: "Chargée de planification",         initials: "MB",                             linkedin: "https://www.linkedin.com/in/mouradakli"},
+  { name: "Mourad Akli",            post: "Commercial senior",                initials: "MA", photo: "/team/morad.jpeg",  linkedin: "https://www.linkedin.com/in/meriem-benyoucef11"},
+  { name: "Lylia Zehraoui",         post: "Commerciale senior",               initials: "LZ", photo: "/team/lylia.jpeg",   linkedin: "https://www.linkedin.com/in/lylia-zahraoui-6690b7184/"},
   { name: "Mohamed Islam Rahil",    post: "Développeur full-stack",           initials: "MR", photo: "/team/islam.jpeg",  linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341" },
-  { name: "Youcef Zellali",         post: "Film maker",                       initials: "YZ",                             linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341" },
-  { name: "Kartout Younes cherif",  post: "Chargé événementiel",              initials: "YO" ,                            linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341"},
-  { name: "Abdelhamid Ouinissi",    post: "Chargé administratif",             initials: "AO" ,                            linkedin: "https://www.linkedin.com/in/mohamed-islam-rahil-787a77341"},
+  { name: "Youcef Zellali",         post: "Film maker",                       initials: "YZ",                             linkedin: "https://www.linkedin.com/in/youcef-zellali-65b8b4243" },
+  { name: "Younes cherif Kartout",  post: "Chargé événementiel",              initials: "YO" ,                            linkedin: "https://www.linkedin.com/in/kartout-younes-cherif-b44b0b389"},
+  { name: "Abdelhamid Ouinissi",    post: "Chargé administratif",             initials: "AO" ,photo:"/team/abdou.jpeg"                           },
   //{ name: "Imene Aissa",            post: "Responsable contenu",              initials: "IA", photo: "/team/imene.jpg",   linkedin: "https://www.linkedin.com/in/imene-aissa/" },
   { name: "Fares Benammar",         post: "Chargé digital",                   initials: "FB" ,photo: "/team/fares.jpeg",  linkedin: "https://www.linkedin.com/in/faresbenammar1/"},
   { name: "Imen El Mokretar",       post: "Assistante administrative",        initials: "IE",                             },
   { name: "Maria Laieb",            post: "Community manager",                initials: "ML",                             linkedin: "https://www.linkedin.com/in/maria-laieb/" },
   { name: "Oussama Aba",            post: "Graphic designer",                 initials: "OA", photo: "/team/oussama.jpeg",linkedin: "https://www.linkedin.com/in/oussama-aba-tlm/" },
+  { name: "Souhila Aid",            post: "Graphic designer",                 initials: "SA"                            ,linkedin: "https://www.linkedin.com/in/souhila-aid-176949214" },
+  { name: "Cleopatra",              post: "Chasseuse d'idées",                initials: "CL", photo: "/team/cleopatra.jpeg",        },
 ];
 
 const rows = [
@@ -74,7 +76,9 @@ export default function TeamScrollSection() {
                     group-hover:[-webkit-text-stroke:0px_transparent]
                   "
                 >
+                  <span> . </span>
                   {member.name}
+                
                 </span>
               </Tag>
             );

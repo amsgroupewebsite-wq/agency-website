@@ -12,7 +12,7 @@ export default function ExpertiseDesktop() {
           className="group/item relative flex items-center justify-between py-6"
         >
           <span
-            className="font-bold text-4xl xl:text-5xl tracking-tight leading-none text-white
+            className="font-bold text-4xl lg:text-3xl md:text-lg   tracking-tight leading-none text-white
                        transition-all duration-300
                        group-hover/list:text-white/25
                        group-hover/item:!text-[#E72048]

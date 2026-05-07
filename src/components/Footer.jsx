@@ -33,7 +33,7 @@ export default function Footer() {
       ref={footerRef}
       className="bg-white text-[#252525] w-full px-6 sm:px-12 lg:px-26 py-12"
       style={{
-        opacity: Math.min(progress * 2, 1),
+        opacity: Math.min(progress * 3, 1),
         transform: `translateY(${(1 - Math.min(progress * 1.5, 1)) * 30}px)`,
       }}
     >

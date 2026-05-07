@@ -48,8 +48,8 @@ export default function Home (){
           </section>  */}
 
           {/* version 2 */}
-          <section>
-             <section className="relative z-0 pt-20 md:pt-30 px-4 sm:px-6 flex flex-col items-start max-w-6xl mx-auto  py-30">
+          <section className="mt-10">
+             <section className="relative z-0 pt-8 md:pt-10 px-4 sm:px-6 flex flex-col gap-8 items-start max-w-6xl mx-auto">
                           <span className="text-xs text-[#b0b0b0]">Offre</span>
                           <motion.div
                             initial={{ opacity: 0 }}

@@ -50,7 +50,8 @@ export default function DomainsScrollSection() {
               onMouseMove={updatePos}
               onMouseLeave={() => setHovered(null)}
             >
-             <p
+             <a
+             href="/projets"
              className="font-extrabold text-[64px] m-0 "
              style={{
                color: 'transparent',
@@ -67,7 +68,7 @@ export default function DomainsScrollSection() {
              }}
             >           
                  {member.name}
-            </p>
+            </a>
             </div>
           ))}
         </div>

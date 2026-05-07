@@ -22,19 +22,19 @@ export const valeurs = [
 ];
 
 export const expertises = [
-  { label: "Développement Web",                   href: "/offre/site-web",     image: "/expertises/site-web.jpg" },
-  { label: "Campagnes digitales",                 href: "/offre/campagnes",    image: "/expertises/digital.jpg" },
-  { label: "Stratégie marketing et communication", href: "/offre/strategie",   image: "/expertises/markiting.jpg" },
-  { label: "Podcast, Film Making et Vidéo",       href: "/offre/production",   image: "/expertises/video.jpg" },
-  { label: "Création graphique",                  href: "/offre/graphisme",    image: "/expertises/graphic.jpg" },
-  { label: "Évènementiel",                        href: "/offre/evenementiel", image: "/expertises/event.jpg" },
+  { label: "Développement Web",                    href: "/offre/developpement-web-mobile",   image: "/expertises/site-web.jpg" },
+  { label: "Campagnes digitales",                  href: "/offre/campagnes-de-communication",   image: "/expertises/digital.jpg" },
+  { label: "Stratégie marketing",                  href: "/offre/strategie",                    image: "/expertises/markiting.jpg" },
+  { label: "Podcast, Film Making et Vidéo",        href: "/offre/production",                   image: "/expertises/video.jpg" },
+  { label: "Création graphique",                   href: "/offre/graphisme",                    image: "/expertises/graphic.jpg" },
+  { label: "Évènementiel",                         href: "/offre/evenementiel",                 image: "/expertises/event.jpg" },
 ];
 
 export const clients = [
-  { src: "/agency/clients/cisco.png",        alt: "Cisco" },
-  { src: "/agency/clients/inpha-medis.png",  alt: "Inpha Medis" },
-  { src: "/agency/clients/backerhughes.png", alt: "Baker Hughes" },
-  { src: "/agency/clients/nestle.png",       alt: "Nestlé" },
-  { src: "/agency/clients/renault.png",      alt: "Renault" },
-  { src: "/agency/clients/sonatrach.png",    alt: "Sonatrach" },
+  { src: "/agency/clients/capilos.png",           alt: "Capilos" },
+  { src: "/agency/clients/inpha-medis.png",       alt: "Inpha Medis" },
+  { src: "/agency/clients/bmpromo.png",           alt: "BM Promotion" },
+  { src: "/agency/clients/amsgroupe.png",         alt: "amsgroupe" },
+  { src: "/agency/clients/twselewpress.png",      alt: "twselewpress" },
+  { src: "/agency/clients/tiziri.png",            alt: "Tiziri ceramica" },
 ];
