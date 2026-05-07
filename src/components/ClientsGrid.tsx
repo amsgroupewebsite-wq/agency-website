@@ -9,7 +9,7 @@ interface Props {
 
 export default function ClientsGrid({ className = "", imageClassName = "w-auto h-22" }: Props) {
   return (
-  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center mt-10 sm:mt-0 py-8">
+  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 items-center mt-10 sm:mt-0 py-8">
               {clients.map((client, i) => (
                 <motion.div
                   key={client.alt}

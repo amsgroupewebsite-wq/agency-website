@@ -33,7 +33,6 @@ export const expertises = [
 export const clients = [
   { src: "/agency/clients/capilos.png",           alt: "Capilos" },
   { src: "/agency/clients/inpha-medis.png",       alt: "Inpha Medis" },
-  { src: "/agency/clients/bmpromo.png",           alt: "BM Promotion" },
   { src: "/agency/clients/amsgroupe.png",         alt: "amsgroupe" },
   { src: "/agency/clients/twselewpress.png",      alt: "twselewpress" },
   { src: "/agency/clients/tiziri.png",            alt: "Tiziri ceramica" },
