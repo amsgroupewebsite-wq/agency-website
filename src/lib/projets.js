@@ -20,7 +20,7 @@ export const projets = [
   siteUrl: "https://www.amsgroupes.com/",
   description:
     "Conception et développement du site web d’Ams Groupe, visant à valoriser ses différentes filiales, présenter ses services et renforcer sa présence digitale avec une image moderne et professionnelle.",
-  images: ["/projets/p10.png","/projets/p9.png"],
+  images: ["/projets/p11.jpeg"],
   featured: false,
 },
 {

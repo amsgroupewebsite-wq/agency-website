@@ -122,17 +122,17 @@ export default function TeamPage() {
 
 
   </div>
-  <section className="w-full bg-[#282C2E] mt-20 lg:mt-30 py-16 sm:py-20 lg:py-24">
+<section className="w-full bg-[#282C2E] mt-20 lg:mt-30 py-16 sm:py-20 lg:py-24">
   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
       {/* Colonne gauche : titre + CTA */}
       <div className="flex flex-col">
         <span className="text-white/65 text-sm sm:text-base uppercase tracking-wider mb-4">
-          Recrutement
+          Recrutement événementiel
         </span>
         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.1] mb-8">
-          Nos offres <br className="hidden sm:block" />
-          d'emploi
+          Rejoignez <br className="hidden sm:block" />
+          nos équipes terrain
         </h2>
 
         {/* CTA Candidature spontanée */}
@@ -141,7 +141,7 @@ export default function TeamPage() {
             Candidature spontanée
           </h3>
           <p className="text-sm text-[#282C2E]/75">
-            Envoyez-nous votre profil — nous étudions chaque candidature.
+            Hôte·sse, interprète ou animateur·rice ? Envoyez-nous votre profil et CV — nous constituons régulièrement nos équipes.
           </p>
           <Link
             href="/contact"
@@ -159,17 +159,22 @@ export default function TeamPage() {
       <div className="flex flex-col">
         {[
           {
-            title: "Stage — Consultant·e études et réputation H/F",
+            title: "Mission — Hôte·sse d'accueil événementiel H/F",
             date: "22.10.25",
             slug: "contact",
           },
           {
-            title: "Stage — Consultant·e social media H/F",
+            title: "Mission — Hôte·sse de stand & salons professionnels H/F",
             date: "22.10.25",
             slug: "contact",
           },
           {
-            title: "CDI — Consultant·e social media santé confirmé H/F",
+            title: "Mission — Interprète FR / EN / AR confirmé·e H/F",
+            date: "22.10.25",
+            slug: "contact",
+          },
+          {
+            title: "Mission — Animateur·rice événementiel & MC H/F",
             date: "22.10.25",
             slug: "contact",
           },
