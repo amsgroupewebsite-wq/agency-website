@@ -69,21 +69,26 @@ export default function ProjetDetail({ projet, isModal = false, onClose }) {
           </p>
           
           {projet.siteUrl && (
-            <Link
+           <Link
               href={projet.siteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-xl transition-all self-start duration-300 hover:-translate-y-2 hover:scale-110"
-              aria-label="Voir le projet"
-            >
-              <Image 
-                src="/flech.png" 
-                alt="Voir le projet" 
-                width={83} 
-                height={90}
-                className="w-8 sm:w-auto"
-              />
-            </Link>
+              aria-label={`Voir le projet ${projet.titre ?? ""}`.trim()}
+              className="group inline-flex items-center gap-2.5 self-start px-5 py-2.5 rounded-full  bg-transparent   transition-all duration-300"
+>
+              <span className="text-[#E54259]  text-xs sm:text-sm font-semibold uppercase tracking-wide transition-colors">
+                Voir le projet
+              </span>
+              <span className="flex items-center justify-center w-12 h-12 rounded-full bg-transparent group-hover:bg-white transition-colors">
+                <Image
+                  src="/flech.png"
+                  alt=""
+                  width={34}
+                  height={34}
+                  className="w-auto  h-auto group-hover:translate-x-4 transition-transform"
+                />
+              </span>
+</Link>
           )}
           
           {/* Tags */}
