@@ -1,40 +1,53 @@
 import "./globals.css";
-import { Suspense } from "react";
+
 import type { ReactNode } from "react";
 import ClientProviders from "../components/ClientProviders";
 import ClientLayout from "../components/ClientLayout";
 import CookieBanner from "../components/CookieBanner";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { cn } from "../lib/utils";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+// Poppins chargé via next/font (auto-hébergé, optimisé, pas de requête bloquante)
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "400", "700"],
+  variable: "--font-sans",
+  display: "swap",
+});
 
 export const metadata = {
-  metadataBase: new URL("https://www.amsagency.com"),
-  title: "AMS Agency",
+  metadataBase: new URL("https://www.agencyams.com"),
+  title: {
+    default: "AMS Agency | Agence de communication en Algérie",
+    template: "%s | AMS Agency",
+  },
   description:
-    "AMS Agency est une agence de communication digitale en Algérie spécialisée en création de sites web, branding, marketing digital et solutions sur mesure pour entreprises.",
+    "Agence de communication globale en Algérie : branding, production audiovisuelle, marketing digital, social media et création de sites web pour les entreprises.",
   keywords: [
-    "agence digitale Algérie",
-    "création site web Algérie",
+    "agence de communication Algérie",
+    "agence communication Alger",
+    "branding Algérie",
+    "production audiovisuelle Algérie",
     "marketing digital Algérie",
-    "branding",
+    "social media Algérie",
+    "création site web Algérie",
     "AMS Agency",
-    "développement web",
-    "SEO Algérie",
   ],
   authors: [{ name: "AMS Agency" }],
   creator: "AMS Agency",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: "/icon.png",
     shortcut: "/icon.png",
     apple: "/icon.png",
   },
   openGraph: {
-    title: "AMS Agency | Agence digitale en Algérie",
+    title: "AMS Agency | Agence de communication en Algérie",
     description:
-      "Développez votre présence en ligne avec AMS Agency : création de sites web, marketing digital et branding.",
-    url: "https://www.amsagency.com",
+      "Donnez de la voix à votre marque : communication globale, branding, audiovisuel, digital et social media avec AMS Agency.",
+    url: "https://www.agencyams.com",
     siteName: "AMS Agency",
     locale: "fr_FR",
     type: "website",
@@ -47,6 +60,13 @@ export const metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "AMS Agency | Agence de communication en Algérie",
+    description:
+      "Donnez de la voix à votre marque : communication globale, branding, audiovisuel, digital et social media avec AMS Agency.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
@@ -57,30 +77,18 @@ export default function RootLayout({
   modal: ReactNode;
 }) {
   return (
-    <html lang="fr" className={cn("font-sans", inter.variable)}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="fr" className={cn(poppins.variable)}>
       <body
-        className="antialiased"
-        style={{ fontFamily: "'Poppins', sans-serif", letterSpacing: "0.1em" }}
+        className="font-sans antialiased"
+        style={{ letterSpacing: "0.1em" }}
       >
         <CookieBanner />
 
-        <Suspense fallback={null}>
+        
           <ClientProviders>
             <ClientLayout>{children}</ClientLayout>
           </ClientProviders>
-        </Suspense>
+       
 
         {modal}
       </body>

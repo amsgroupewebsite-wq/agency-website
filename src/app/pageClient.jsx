@@ -89,9 +89,9 @@ export default function Home() {
               priority
               className="select-none w-full max-w-[400px] lg:max-w-[600px] h-auto"
             />
-            <p className="text-white text-lg lg:text-2xl leading-relaxed w-full lg:w-10/12">
+            <h1 className="text-white text-lg lg:text-2xl leading-relaxed w-full lg:w-10/12">
               AMS Agency, le partenaire stratégique qui donne vie à des expériences mémorables.
-            </p>
+            </h1>
             <Link
               href="/contact"
               className="bg-[#E54259] text-white text-base lg:text-lg font-semibold px-6 lg:px-8 py-3 lg:py-4 rounded-full border border-white hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-xl"

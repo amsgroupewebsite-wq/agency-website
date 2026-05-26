@@ -1,6 +1,6 @@
 // src/app/projets/[slug]/page.jsx
-import { projets} from "../../../lib/projets";
-import ProjetDetail from "../../../components/ProjetDetail"
+import { projets } from "../../../lib/projets";
+import ProjetDetail from "../../../components/ProjetDetail";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -13,8 +13,16 @@ export async function generateMetadata({ params }) {
   if (!item) return {};
 
   return {
-    title: `${item.title} — AMS Agency`,
-    description: item.intro,
+    title: item.title, // → "Titre | AMS Agency" via le template du layout
+    description: item.intro || `Projet ${item.title} signé AMS Agency.`,
+    alternates: { canonical: `/projets/${slug}` },
+    openGraph: {
+      title: `${item.title} | AMS Agency`,
+      description: item.intro,
+      url: `https://www.agencyams.com/projets/${slug}`,
+      type: "article",
+      images: item.images?.[0] ? [{ url: item.images[0], alt: item.title }] : undefined,
+    },
   };
 }
 
